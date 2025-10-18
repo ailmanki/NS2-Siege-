@@ -9,7 +9,7 @@ Script.Load("lua/Mixins/SignalEmitterMixin.lua")
 
 
 ---@class SideDoor: ScriptActor
-SideDoor = class('SideDoor', ScriptActor)
+class 'SideDoor' (ScriptActor)
 
 SideDoor.kMapName = "sidedoor"
 SideDoor.kOpenDelta = 0.001

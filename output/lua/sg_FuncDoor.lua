@@ -7,7 +7,7 @@ Script.Load("lua/ObstacleMixin.lua")
 Script.Load("lua/MapBlipMixin.lua")
 Script.Load("lua/Mixins/SignalEmitterMixin.lua")
 
-FuncDoor = class('FuncDoor', ScriptActor)
+class 'FuncDoor' (ScriptActor)
 FuncDoor.kMapName = "ns2siege_funcdoor"
 FuncDoor.kOpenDelta = 0.001
 
@@ -17,7 +17,7 @@ local networkVars = {
     scale    = "vector",
     isOpened = "boolean",
     isMoving = "boolean",
-    mapblip  = "vector",
+    mapblip = "vector"
 }
 
 AddMixinNetworkVars(BaseModelMixin, networkVars)
@@ -254,7 +254,7 @@ if Server then
     function FuncDoor:BeginOpenDoor(doorType)
         if self.type == doorType and not self.isOpened then
             self.isMoving = true
-            
+
             if self.emitMessage ~= "" then
                 self:SetSignalRange(1000)
                 self:EmitSignal(0, self.emitMessage)
@@ -354,7 +354,7 @@ function FuncDoor:OnGetMapBlipInfo()
     local blipTeam = -1
     local isAttacked = false
     local isParasited = false
-    
+
     return success, blipType, blipTeam, isAttacked, isParasited
 end
 

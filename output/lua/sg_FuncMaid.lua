@@ -23,8 +23,18 @@ local function KillEntity(self, entity)
 end
 
 -- Fetches a list of Entities of the specified Class and kills them.
+-- Optimized to use spatial queries instead of iterating all entities on map
 local function KillEntitiesByClassname(self, classname)
-    for _, entity in ientitylist(Shared.GetEntitiesWithClassname(classname)) do
+    -- Calculate approximate radius from trigger scale
+    -- Use conservative estimate to ensure we catch all entities in trigger
+    local origin = self:GetOrigin()
+    local radius = (self.scale * 0.5):GetLength()  -- Conservative radius estimate
+
+    -- Use spatial query to only get nearby entities
+    local nearbyEntities = GetEntitiesWithinRange(classname, origin, radius)
+
+    for _, entity in ipairs(nearbyEntities) do
+        -- Double-check with precise trigger bounds
         if self:GetIsPointInside(entity:GetOrigin()) then
             Shared.Message('Maid\'s cleaning duty for ' .. classname .. ' .. ' .. entity:GetId())
             KillEntity(self, entity) -- do cleanup
@@ -33,7 +43,10 @@ local function KillEntitiesByClassname(self, classname)
 end
 
 local function FuncMaidTriggered(self)
-    local front, siege, suddendeath = GetGameInfoEntity():GetSiegeTimes()
+    local gameInfo = GetGameInfoEntity()
+    if not gameInfo then return end
+
+    local front, siege, suddendeath = gameInfo:GetSiegeTimes()
     local active = (self.type == 0 and front > 0) or (self.type == 1 and siege > 0)
     if GetGamerules():GetGameStarted() and active then
         KillEntitiesByClassname(self, "Cyst")

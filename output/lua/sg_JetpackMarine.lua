@@ -1,10 +1,5 @@
 function JetpackMarine:GetHasEnoughFuelAntiStomp()
-    local fuel=self:GetFuel()
-    if fuel>kAntiStompNeedFuel then
-        return true
-    else
-        return false
-    end
+    return self:GetFuel() > kAntiStompNeedFuel
 end
 
 function JetpackMarine:GetFuelAfterAntiStomp()
