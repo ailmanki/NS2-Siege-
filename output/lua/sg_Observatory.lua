@@ -1,0 +1,1 @@
+Observatory.kDetectionRange = 22 -- From NS1 state:22
