@@ -51,6 +51,15 @@
         <parameter name="shortenTimer" type="boolean" label="ShortenTimer"
                    help="Shorts timer by random 50%-80%. By default 5-7min front timer with shortened timer enabled due to recent changes of having autobuild and such to get rid of long wait times"
                    default="true"/>
+        <parameter name="direction" type="choice" label="Direction" default="0"
+                   help="Direction the movable will move after closing (place it in the map at its closed position). If you choose waypoint you have to place one func_train_waypoint and name it like the moveable.">
+            <choice label="Down" value="0"/>
+            <choice label="Up" value="1"/>
+            <choice label="Left" value="2"/>
+            <choice label="Right" value="3"/>
+            <choice label="Front" value="4"/>
+            <choice label="Back" value="5"/>
+        </parameter>
     </class>
 
     <class name="siegedoor" placeable="true">
@@ -62,6 +71,15 @@
         <size>
             <scale>scale</scale>
         </size>
+        <parameter name="direction" type="choice" label="Direction" default="0"
+                   help="Direction the movable will move after closing (place it in the map at its closed position). If you choose waypoint you have to place one func_train_waypoint and name it like the moveable.">
+            <choice label="Down" value="0"/>
+            <choice label="Up" value="1"/>
+            <choice label="Left" value="2"/>
+            <choice label="Right" value="3"/>
+            <choice label="Front" value="4"/>
+            <choice label="Back" value="5"/>
+        </parameter>
         <parameter name="scale" type="vector" label="scale" default="1.0, 1.0, 1.0"/>
         <parameter name="model" type="file" label="model"
                    default="models/props/eclipse/eclipse_wallmodse_02_door.model" filter="*.model"/>
@@ -79,6 +97,15 @@
         <parameter name="scale" type="vector" label="scale" default="1.0, 1.0, 1.0"/>
         <parameter name="model" type="file" label="model"
                    default="models/props/eclipse/eclipse_wallmodse_02_door.model" filter="*.model"/>
+        <parameter name="direction" type="choice" label="Direction" default="0"
+                   help="Direction the movable will move after closing (place it in the map at its closed position). If you choose waypoint you have to place one func_train_waypoint and name it like the moveable.">
+            <choice label="Down" value="0"/>
+            <choice label="Up" value="1"/>
+            <choice label="Left" value="2"/>
+            <choice label="Right" value="3"/>
+            <choice label="Front" value="4"/>
+            <choice label="Back" value="5"/>
+        </parameter>
     </class>
 
 
@@ -136,8 +163,8 @@
 		<parameter name="speed" type="real" label="Move Speed" help="How fast the sg_func_door will move." default="3.0"/>
         <parameter name="direction" type="choice" label="Direction" default="0"
                    help="Direction the movable will move after closing (place it in the map at its closed position). If you choose waypoint you have to place one func_train_waypoint and name it like the moveable.">
-            <choice label="Up" value="0"/>
-            <choice label="Down" value="1"/>
+            <choice label="Down" value="0"/>
+            <choice label="Up" value="1"/>
             <choice label="Left" value="2"/>
 			<choice label="Right" value="3"/>
 			<choice label="Front" value="4"/>

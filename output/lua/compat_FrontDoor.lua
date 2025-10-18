@@ -39,13 +39,13 @@ end
 
 local function GetOpenTranslation(self)
     local offset = self.waypoint.close.rotation:GetCoords()
-    self.direction =  self.direction or 0
+    self.direction = self.direction or 0
     if self.direction == 0 then
         -- Up
-        offset = offset.yAxis
+        offset = -offset.yAxis
     elseif self.direction == 1 then
         -- Down
-        offset = -offset.yAxis
+        offset = offset.yAxis
     elseif self.direction == 2 then
         -- Left
         offset = offset.xAxis
