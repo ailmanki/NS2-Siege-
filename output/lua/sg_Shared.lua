@@ -13,7 +13,14 @@ end
 
 Script.Load("lua/sg_FuncDoor.lua")
 Script.Load("lua/sg_FuncMaid.lua")
+
+Script.Load("lua/compat_SiegeDoor.lua")
+Script.Load("lua/compat_FrontDoor.lua")
+Script.Load("lua/compat_SideDoor.lua")
+Script.Load("lua/compat_BreakableDoor.lua")
+
 Script.Load("lua/sg_NetworkMessages.lua")
+
 
 kSignalFuncMaid = "func_maid_signal"
 
@@ -23,3 +30,4 @@ kSiegeDoorType = 1
 kDoorTypeToSiegeMessage = {}
 kDoorTypeToSiegeMessage[kFrontDoorType] = kSiegeMessageTypes.FrontDoorOpened
 kDoorTypeToSiegeMessage[kSiegeDoorType] = kSiegeMessageTypes.SiegeDoorOpened
+

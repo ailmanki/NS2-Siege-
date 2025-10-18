@@ -6,10 +6,18 @@ function GetRoboticsFactoryBuildValid(techId, origin, normal, player)
         
         if (front > 0) then
             local ents = GetEntitiesWithinXZRange("FuncDoor", origin, 12)
-            return (#ents == 0)
+            isValid = #ents == 0
+            if isValid then
+                ents = GetEntitiesWithinXZRange("FrontDoor", origin, 12)
+                isValid = #ents == 0
+            end
+            if isValid then
+                ents = GetEntitiesWithinXZRange("SideDoor", origin, 12)
+                isValid = #ents == 0
+            end
         end
         
-        if (siege > 0) then
+        if isValid and siege > 0 then
             local ents = GetEntitiesWithinXZRange("FuncDoor", origin, 12)
             for i = 1, #ents do
                 -- if its near a siege door
@@ -17,7 +25,11 @@ function GetRoboticsFactoryBuildValid(techId, origin, normal, player)
                     return false
                 end
             end
+            
+            ents = GetEntitiesWithinXZRange("SiegeDoor", origin, 12)
+            isValid = #ents == 0
         end
+        
     end
     return isValid
 end

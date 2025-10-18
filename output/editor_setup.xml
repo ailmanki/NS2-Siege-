@@ -1,5 +1,117 @@
 <editor>
 <classes>
+    <!-- start siege -->
+
+    <class name="gravity_section" placeable="true">
+        <parent>trigger</parent>
+
+        <model>
+            <file>models/system/editor/location.model</file>
+            <scale>scale</scale>
+        </model>
+
+        <size>
+            <scale>scale</scale>
+        </size>
+
+        <!-- Base parameters -->
+        <parameter name="name" type="string" label="Name" help="Name of the vent location shown to players"/>
+        <parameter name="scale" type="vector" label="Scale" default="1.0, 1.0, 1.0" help="Size of the vent area"/>
+
+        <!-- Vent effect parameters -->
+        <parameter name="gravity_amount" type="real" label="Gravity Multiplier"
+                   help="Multiplier of Gravity (0.0-1.0)" default="1"/>
+    </class>
+    <class name="breakable_door" placeable="true">
+        <help>Deprecated.</help>
+        <parent>logic_toggle_base</parent>
+        <model>
+            <file>model</file>
+            <scale>scale</scale>
+        </model>
+        <size>
+            <scale>scale</scale>
+        </size>
+        <parameter name="scale" type="vector" label="scale" default="1.0, 1.0, 1.0"/>
+        <parameter name="model" type="file" label="model" default="models/misc/door/door.model" filter="*.model"/>
+    </class>
+
+    <class name="frontdoor" placeable="true">
+        <parent>logic_toggle_base</parent>
+        <model>
+            <file>model</file>
+            <scale>scale</scale>
+        </model>
+        <size>
+            <scale>scale</scale>
+        </size>
+        <parameter name="scale" type="vector" label="scale" default="1.0, 1.0, 1.0"/>
+        <parameter name="model" type="file" label="model"
+                   default="models/props/eclipse/eclipse_wallmodse_02_door.model" filter="*.model"/>
+        <parameter name="shortenTimer" type="boolean" label="ShortenTimer"
+                   help="Shorts timer by random 50%-80%. By default 5-7min front timer with shortened timer enabled due to recent changes of having autobuild and such to get rid of long wait times"
+                   default="true"/>
+    </class>
+
+    <class name="siegedoor" placeable="true">
+        <parent>logic_toggle_base</parent>
+        <model>
+            <file>model</file>
+            <scale>scale</scale>
+        </model>
+        <size>
+            <scale>scale</scale>
+        </size>
+        <parameter name="scale" type="vector" label="scale" default="1.0, 1.0, 1.0"/>
+        <parameter name="model" type="file" label="model"
+                   default="models/props/eclipse/eclipse_wallmodse_02_door.model" filter="*.model"/>
+    </class>
+
+    <class name="sidedoor" placeable="true">
+        <parent>logic_toggle_base</parent>
+        <model>
+            <file>model</file>
+            <scale>scale</scale>
+        </model>
+        <size>
+            <scale>scale</scale>
+        </size>
+        <parameter name="scale" type="vector" label="scale" default="1.0, 1.0, 1.0"/>
+        <parameter name="model" type="file" label="model"
+                   default="models/props/eclipse/eclipse_wallmodse_02_door.model" filter="*.model"/>
+    </class>
+
+
+    <!-- Camera position -->
+    <class name="camera_origin" placeable="true">
+        <model>
+            <file>models/system/editor/camera_origin.model</file>
+        </model>
+
+        <parameter name="cameraName" type="string" label="Camera Name"
+                   help="Name of the camera to be referenced in LUA." default=""/>
+        <parameter name="fov" type="real" label="FOV" help="Field of view of the camera, in degrees.  90 is normal."
+                   default="90.0"/>
+    </class>
+
+    <!-- Target position -->
+    <class name="target_point">
+
+        <model>
+            <file>models/system/editor/waypoint.model</file>
+        </model>
+
+        <parameter name="targetName" type="string" label="Target Name"
+                   help="Name this position will be referred to as in LUA." default=""/>
+
+    </class>
+
+    <!-- Target vector -->
+    <class name="cheering_marine">
+        <model>
+            <file>models/marine/male/male.model</file>
+        </model>
+    </class>
     <!-- start ns2siege+ -->
 	
 	<class name="ns2siege_funcdoor">
@@ -104,7 +216,17 @@
         <parameter name="startsOn" type="boolean" label="Starts on" default="false"/>
 
     </class>
-    
+
+    <class name="nav_point">
+        <pathing>
+            <include/>
+            <file>models/misc/tech_point/tech_point.model</file>
+        </pathing>
+        <model>
+            <file>models/system/editor/gamerules.model</file>
+        </model>
+    </class>
+
     <class name="ambient_sound_player">
     
         <parent>signal_listener</parent>
@@ -151,7 +273,9 @@
         <parameter name="pathWalkable" type="boolean" label="Pathing Walkable" help="On will be walkable in NavMesh. Off makes prop not walkable in nav mesh" default="true"/>
 		<parameter name="collidable" type="boolean" label="Collidable" help="The prop can be collided with" default="true"/>
 		<parameter name="emissivePower" type="boolean" label="Emissive matches power" help="Matches emissiveness with the room power." default="true"/>
-              
+            <parameter name="allowBullets" type="boolean" label="Allow Bullets Through"
+                       help="If collidable, allow bullets through as if it was not collidable." default="false"/>
+
     </class>
 	
     <class name="billboard"  placeable="false">
@@ -189,7 +313,8 @@
 		</reflection_probe>
         <parameter name="distance" type="distance" label="Max Distance" help="Maximum distance the reflection probe will affect the scene" default="2.0"/>
 		<parameter name="strength" type="real" label="Strength" help="Intensity of the reflections. Recommended to be less than 0.5" default="0.5"/>
-    </class>	
+            <parameter name="ignorePowergrid" type="boolean" label="Ignore power grid" default="false"/>
+    </class>
 	
     <!-- Base class for all lights -->
     <class name="light_base" placeable="false">
@@ -332,6 +457,37 @@
         </sphere>
     </class>
 
+        <!-- Camera position -->
+        <class name="camera_origin" placeable="true">
+            <model>
+                <file>models/system/editor/camera_origin.model</file>
+            </model>
+
+            <parameter name="cameraName" type="string" label="Camera Name"
+                       help="Name of the camera to be referenced in LUA." default=""/>
+            <parameter name="fov" type="real" label="FOV" help="Field of view of the camera, in degrees.  90 is normal."
+                       default="90.0"/>
+        </class>
+
+        <!-- Target position -->
+        <class name="target_point">
+
+            <model>
+                <file>models/system/editor/waypoint.model</file>
+            </model>
+
+            <parameter name="targetName" type="string" label="Target Name"
+                       help="Name this position will be referred to as in LUA." default=""/>
+
+        </class>
+
+        <!-- Target vector -->
+        <class name="cheering_marine">
+            <model>
+                <file>models/marine/male/male.model</file>
+            </model>
+        </class>
+
     <!-- Base spawn point -->
     <class name="base_start" placeable="false">
         <model>
@@ -346,7 +502,7 @@
             <file>models/system/editor/player_spawn.model</file>
         </model>            
     </class>
-	
+
     <!-- Placeable structures -->
     <class name="base_alien_structure" placeable="false">
         <parameter name="startsBuilt" label="Starts Built" type="boolean" default="true" />
@@ -506,7 +662,7 @@
 
     </class>
 
-    
+
     <!-- Reverb control -->    
     <class name="reverb">
         <help>FMOD Reverb object. Place it to adjust the audio reverb qualities nearby. References reverb settings from FMOD Designer.</help>
@@ -576,7 +732,7 @@
     </class>
 
     <!-- Trigger -->
-    <class name="trigger" placeable="false">
+        <class name="trigger" placeable="false" alwaysPositiveScale="true">
 
         <model>
             <file>models/system/editor/location.model</file>
@@ -591,6 +747,22 @@
         <parameter name="scale" type="vector" label="Scale" default="1.0, 1.0, 1.0" help=""/>        
         <parameter name="name" label="Name" type="string" help="Name of trigger which can be referenced by other entities" />
 
+        </class>
+
+        <!-- Area Trigger -->
+        <class name="area_trigger" placeable="true" alwaysPositiveScale="true">
+
+            <model>
+                <file>models/system/editor/location.model</file>
+                <scale>scale</scale>
+            </model>
+
+            <size>
+                <scale>scale</scale>
+            </size>
+            <parameter name="scale" type="vector" label="Scale" default="1.0, 1.0, 1.0" help=""/>
+            <parameter name="name" label="Name" type="string" help="Name of trigger which can be referenced in lua."/>
+
     </class>
 	
 	<class name="worldtooltip">	
@@ -604,7 +776,7 @@
 	</class>
 
     <!-- Ladder -->
-    <class name="ladder">
+        <class name="ladder" alwaysPositiveScale="true">
         <model>
             <file>models/system/editor/ladder.model</file>
             <scale>scale</scale>
@@ -617,7 +789,7 @@
     </class>
 
     <!-- Tell overview what area to render out and the game what area is playable for commander -->
-    <class name="minimap_extents">
+        <class name="minimap_extents" alwaysPositiveScale="true">
     
 	<parent>trigger</parent>
     
@@ -626,7 +798,7 @@
     </class>
 
     <!-- Team join -->
-    <class name="team_join">
+        <class name="team_join" alwaysPositiveScale="true">
 
         <model>
             <file>models/system/editor/location.model</file>
@@ -650,7 +822,7 @@
     </class>
     
     <!-- Simple location -->
-    <class name="location" help="Enter name location which is shown to players" >
+        <class name="location" alwaysPositiveScale="true" help="Enter name location which is shown to players">
 
 	<parent>trigger</parent> 
 
@@ -659,7 +831,7 @@
     </class>
 
     <!-- Kill trigger -->
-    <class name="death_trigger">
+        <class name="death_trigger" alwaysPositiveScale="true">
     
         <model>
             <file>models/system/editor/death_trigger.model</file>
@@ -681,10 +853,17 @@
             <choice label="Marine" value="2"/>
             <choice label="Alien" value="3"/>
         </parameter>
-        
+            <parameter name="damageType" type="choice" label="Damage Type"
+                       help="Determines the type of damage this should be. This is for visual effects only."
+                       default="1">
+                <choice label="Normal" value="1"/>
+                <choice label="Gas" value="2"/>
+                <choice label="Fire" value="3"/>
+                <choice label="Electric" value="4"/>
+            </parameter>
     </class>
 	
-    <class name="teleport_trigger">
+        <class name="teleport_trigger" alwaysPositiveScale="true">
     
         <model>
             <file>models/system/editor/teleport_trigger.model</file>
@@ -738,6 +917,22 @@
             <scale>scale</scale>
         </size>
         <parameter name="scale" type="vector" label="Scale" default="51.6, 1.0, 51.6" help="Size of ARC range circle"/> <!-- Currently 10 meters -->
+
+        </class>
+
+        <!-- Obs range circle -->
+        <class name="obs_range_circle" placeable="true">
+
+            <model>
+                <file>models/misc/circle/circle.model</file>
+                <scale>scale</scale>
+            </model>
+
+            <size>
+                <scale>scale</scale>
+            </size>
+            <parameter name="scale" type="vector" label="Scale" default="43.67, 1.0, 43.67"
+                       help="Size of Observatory range circle"/> <!-- Currently 22 meters -->
 
     </class>
     
@@ -951,9 +1146,91 @@
         <parameter name="pathWalkable" type="boolean" label="Pathing Walkable" help="On will be walkable in NavMesh. Off makes prop not walkable in nav mesh" default="true"/>
 		<parameter name="collidable" type="boolean" label="Collidable" help="The prop can be collided with" default="true"/>
         <parameter name="emitChannel" type="integer" label="Tag emit channel" help="All animation tags will be emitted as a signal on this channel." default="0"/>
-        
+
+        </class>
+
+        <class name="fog_mesh_volume" placeable="true">
+
+            <model>
+                <file>models/system/editor/fogcontrols.model</file>
+                <scale>scale</scale>
+            </model>
+
+            <fog_mesh_volume>
+                <fogVolumeName>fogVolumeName</fogVolumeName>
+                <density>density</density>
+                <color>color</color>
+                <falloff>falloff</falloff>
+                <sortPriority>sortPriority</sortPriority>
+            </fog_mesh_volume>
+
+            <size>
+                <scale>scale</scale>
+            </size>
+
+            <parameter name="scale" type="vector" label="Scale" default="1.0, 1.0, 1.0"/>
+            <parameter name="fogVolumeName" type="string" label="Fog Volume Name"
+                       help="The name of the fog volume.  This name should match a geometry group name, but without the 'FogVolume_' prefix.  For example, if the geometry group is named 'FogVolume_BigFog1', then the correct name here would be 'BigFog1'.  The geometry in the group should be a closed mesh -- no missing faces!"/>
+            <parameter name="density" type="real" label="Density" default="100.0"
+                       help="The density of the fog.  Higher values mean the fog gets thicker quicker."/>
+            <parameter name="color" type="color" label="Color" default="0.25, 0.25, 0.25"/>
+            <parameter name="falloff" type="real" label="Falloff" default="0.0"
+                       help="The exponential falloff constant used to vary the fog thickness.  Higher values create a sharper falloff, lower values a more gradual falloff, with 0 being a totally uniform fog density.  This fog distribution can be changed by scaling, rotating, and moving the fog entity.  The fog density varies along the fog entity's Y-axis."/>
+            <parameter name="sortPriority" type="integer" label="Sort Priority"
+                       help="Determines the order in which similar fog objects are rendered in (Eg what order fog_volume objects render relative to other fog_volume objects).  Fog objects are rendered in descending sort priority.  Otherwise, fog objects would flicker and fight each other as the render order fluctuates."/>
+
+        </class>
+
+        <class name="fog_sphere_volume" placeable="true">
+
+            <billboard>
+                <file>materials/editor/fog_billboard.material</file>
+                <size>1.0</size>
+            </billboard>
+
+            <sphere>
+                <radius>radius</radius>
+            </sphere>
+
+            <fog_sphere_volume>
+                <density>density</density>
+                <radius>radius</radius>
+                <color>color</color>
+                <sortPriority>sortPriority</sortPriority>
+                <softness>softness</softness>
+            </fog_sphere_volume>
+
+            <parameter name="density" type="real" label="Density" default="5"
+                       help="The density of the fog.  Higher values mean the fog gets thicker quicker."/>
+            <parameter name="color" type="color" label="Color" default="0.25, 0.25, 0.25"/>
+            <parameter name="sortPriority" type="integer" label="Sort Priority"
+                       help="Determines the order in which similar fog objects are rendered in (Eg what order fog_volume objects render relative to other fog_volume objects).  Fog objects are rendered in descending sort priority.  Otherwise, fog objects would flicker and fight each other as the render order fluctuates."/>
+            <parameter name="radius" type="distance" label="Radius" help="Maximum visible radius of the fog sphere."
+                       default="5.0"/>
+            <parameter name="softness" type="real" label="Softness" default="0.5"
+                       help="Determines the softness of the edges of the sphere by adjusting the density distribution of the fog at the edges versus in the middle of the sphere.  1.0 = maximum softness, 0.0 = uniform density (hard edges)"/>
+
     </class>
     
+        <class name="wet_map_volume" placeable="true">
+
+            <model>
+                <file>models/system/editor/fogcontrols.model</file>
+            </model>
+
+            <wet_map_volume>
+                <wetMapVolumeName>wetMapVolumeName</wetMapVolumeName>
+                <wetness>wetness</wetness>
+            </wet_map_volume>
+
+            <parameter name="wetMapVolumeName" type="string" label="Wet Map Volume Name"
+                       help="The name of the wetmap volume.  This name should match a geometry group name, but without the 'WetMapVolume_' prefix.  For example, if the geometry group is named 'WetMapVolume_Outdoor1', then the correct name here would be 'Outdoor1'.  The geometry in the group should be a closed mesh -- no missing faces!"/>
+            <parameter name="wetness" type="real" label="Wetness" default="1.0"
+                       help="The amount of wetness in this volume.  Range from 0.0 (dry) to 1.0 (wet)."/>
+
+        </class>
+
+
     <class name="prop_dynamic_animator">
     
         <parent>signal_listener</parent>

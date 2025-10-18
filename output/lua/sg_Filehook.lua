@@ -43,18 +43,18 @@ ModLoader.SetupFileHook( "lua/Hive_Server.lua", "lua/sg_Hive_Server.lua" , "repl
 ModLoader.SetupFileHook( "lua/ConcedeSequence.lua", "lua/sg_ConcedeSequence.lua" , "replace" )
 
 -- enable commander bots
-ModLoader.SetupFileHook( "lua/VotingAddCommanderBots.lua", "lua/sg_VotingAddCommanderBots.lua" , "post" )
-ModLoader.SetupFileHook( "lua/bots/BotUtils.lua", "lua/bots/sg_BotUtils.lua" , "post" )
-ModLoader.SetupFileHook( "lua/bots/CommonActions.lua", "lua/bots/sg_CommonActions.lua" , "post" )
---ModLoader.SetupFileHook( "lua/bots/CommanderBrain.lua", "lua/bots/sg_CommanderBrain.lua" , "post" )
-
--- bot replacements :(
---ModLoader.SetupFileHook( "lua/bots/AlienCommanderBrain_Data.lua", "lua/bots/sg_AlienCommanderBrain_Data.lua" , "replace" )
---ModLoader.SetupFileHook( "lua/bots/MarineCommanderBrain_Data.lua", "lua/bots/sg_MarineCommanderBrain_Data.lua" , "replace" )
---ModLoader.SetupFileHook( "lua/bots/MarineBrain_Data.lua", "lua/bots/sg_MarineBrain_Data.lua" , "replace" )
---ModLoader.SetupFileHook( "lua/bots/SkulkBrain_Data.lua", "lua/bots/sg_SkulkBrain_Data.lua" , "replace" )
---ModLoader.SetupFileHook( "lua/bots/GorgeBrain_Data.lua", "lua/bots/sg_GorgeBrain_Data.lua" , "replace" )
-ModLoader.SetupFileHook( "lua/bots/BotMotion.lua", "lua/bots/sg_BotMotion.lua" , "replace" )
+--ModLoader.SetupFileHook( "lua/VotingAddCommanderBots.lua", "lua/sg_VotingAddCommanderBots.lua" , "post" )
+--ModLoader.SetupFileHook( "lua/bots/BotUtils.lua", "lua/bots/sg_BotUtils.lua" , "post" )
+--ModLoader.SetupFileHook( "lua/bots/CommonActions.lua", "lua/bots/sg_CommonActions.lua" , "post" )
+----ModLoader.SetupFileHook( "lua/bots/CommanderBrain.lua", "lua/bots/sg_CommanderBrain.lua" , "post" )
+--
+---- bot replacements :(
+----ModLoader.SetupFileHook( "lua/bots/AlienCommanderBrain_Data.lua", "lua/bots/sg_AlienCommanderBrain_Data.lua" , "replace" )
+----ModLoader.SetupFileHook( "lua/bots/MarineCommanderBrain_Data.lua", "lua/bots/sg_MarineCommanderBrain_Data.lua" , "replace" )
+----ModLoader.SetupFileHook( "lua/bots/MarineBrain_Data.lua", "lua/bots/sg_MarineBrain_Data.lua" , "replace" )
+----ModLoader.SetupFileHook( "lua/bots/SkulkBrain_Data.lua", "lua/bots/sg_SkulkBrain_Data.lua" , "replace" )
+----ModLoader.SetupFileHook( "lua/bots/GorgeBrain_Data.lua", "lua/bots/sg_GorgeBrain_Data.lua" , "replace" )
+--ModLoader.SetupFileHook( "lua/bots/BotMotion.lua", "lua/bots/sg_BotMotion.lua" , "replace" )
 
 --updated by cn community:
 --alien health value adjustments
@@ -68,7 +68,6 @@ ModLoader.SetupFileHook( "lua/Armory.lua", "lua/sg_Armory.lua" , "post" )
 
 --add advanced welder tech
 ModLoader.SetupFileHook( "lua/MarineTeam.lua", "lua/sg_MarineTeam.lua" , "post" )
-ModLoader.SetupFileHook( "lua/MarineTechMap.lua", "lua/sg_MarineTechMap.lua" , "post" )
 ModLoader.SetupFileHook( "lua/PlayingTeam.lua", "lua/sg_PlayingTeam.lua" , "post" )
 ModLoader.SetupFileHook( "lua/TechTreeButtons.lua", "lua/sg_TechTreeButtons.lua" , "post" )
 ModLoader.SetupFileHook( "lua/TechTreeConstants.lua", "lua/sg_TechTreeConstants.lua" , "post" )
@@ -98,3 +97,5 @@ ModLoader.SetupFileHook( "lua/Observatory.lua","lua/sg_Observatory.lua","post")
 -- changes
 ModLoader.SetupFileHook( "lua/RoboticsFactory.lua","lua/sg_RoboticsFactory.lua","post")
 -- ModLoader.SetupFileHook( "lua/NS2Utility.lua","lua/sg_NS2Utility.lua","post")
+
+ModLoader.SetupFileHook("lua/Server.lua", "lua/compat_post_Server.lua", "post")

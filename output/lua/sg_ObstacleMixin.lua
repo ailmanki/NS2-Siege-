@@ -4,38 +4,39 @@
 --
 
 kFuncDoorMapName = "ns2siege_funcdoor"
+kFuncCompatSiegeDoorMapName = "siegedoor"
+kFuncCompatFrontDoorMapName = "frontdoor"
+kFuncCompatSideDoorMapName = "sidedoor"
+kFuncCompatBreakableDoorMapName = "breakabledoor"
 
-local ns2_GetPathingInfo = ObstacleMixin._GetPathingInfo
-function ObstacleMixin:_GetPathingInfo()
-
-    -- command structures get a pass
-    if  self:GetMapName() == "commandstructure"
-        or self:GetMapName() == "commandstation"
-        or self:GetMapName() == "hive" then
-        
-        -- by default, the game tries to make a 1000 unit tall thing. It's stupid. We can't use it.
-        -- NS2s original implementation was bad, but we just want to avoid it altogether for the most part.
-        local position = self:GetOrigin() + Vector(0, -3, 0)  
-        local radius = LookupTechData(self:GetTechId(), kTechDataObstacleRadius, 1.0)
-        local height = 8
-        
-        return position, radius, height
-    end
+-- technically it would be most correct to reset all entities in the world
+-- but practically, entities which implemented GetResetsPathing are of temporary nature and used for blocking,
+-- and unless units travel <range> faster than those temporary entities lifetime, there is no reason to change this
+local function InformEntitiesInRange(self, range)
     
-    -- everything else doesn't add to the pathing mesh
-    if (self:GetMapName() ~= kFuncDoorMapName)
-        or not self._modelCoords  then
-        
-        --local position = self:GetOrigin() + Vector(0, -3, 0)  
-        --local radius = LookupTechData(self:GetTechId(), kTechDataObstacleRadius, 1.0)
-        --local height = 8
-        
-        --return position, radius, height
+    for _, pathEnt in ipairs(GetEntitiesWithMixinWithinRange("Pathing", self:GetOrigin(), range)) do
+        pathEnt:OnObstacleChanged()
+    end
+
+end
+
+--local ns2_GetPathingInfo = ObstacleMixin._GetPathingInfo
+function ObstacleMixin:_GetPathingInfo()
+    
+    -- front door has it's own function
+    if not self._modelCoords then
         return nil, 0, 0
     end
-
-    -- front door has it's own function
-    assert(self.GetObstaclePathingInfo)
+    if not self.GetObstaclePathingInfo then
+        
+        local position = self:GetOrigin() + Vector(0, -100, 0)
+        local radius = LookupTechData(self:GetTechId(), kTechDataObstacleRadius, 1.0)
+        local height = 200.0
+        
+        return position, radius, height
+    
+    end
+    
     return self:GetObstaclePathingInfo()
 end
 

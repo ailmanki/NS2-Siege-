@@ -7,9 +7,10 @@ Script.Load("lua/ObstacleMixin.lua")
 Script.Load("lua/MapBlipMixin.lua")
 Script.Load("lua/Mixins/SignalEmitterMixin.lua")
 
-FuncDoor = class('FuncDoor', ScriptActor)
-FuncDoor.kMapName = "ns2siege_funcdoor"
-FuncDoor.kOpenDelta = 0.001
+---@class SiegeDoor
+class 'SiegeDoor'(ScriptActor)
+SiegeDoor.kMapName = "siegedoor"
+SiegeDoor.kOpenDelta = 0.001
 
 local kOpeningEffect = PrecacheAsset("cinematics/environment/steamjet_ceiling.cinematic")
 
@@ -26,22 +27,20 @@ AddMixinNetworkVars(ClientModelMixin, networkVars)
 AddMixinNetworkVars(ObstacleMixin, networkVars)
 
 -- Entity defined properties:
---   type         (0-FrontDoor; 1-SiegeDoor; ...)
 --   model        (models/props/eclipse/eclipse_wallmodse_02_door.model)
 --   direction    (0-Up; 1-Down; 2-Left; 3-Right)
---   distance     (10)
---   speed        (0.25)
+--   moveSpeed        (0.25)
 
 local backupModel = PrecacheAsset("models/props/eclipse/eclipse_wallmodsE_02_door.model")
 
 -- is opened or is actually opening
-function FuncDoor:GetIsOpened()
+function SiegeDoor:GetIsOpened()
     return self.isOpened or self.isMoving
 end
 
 local function GetOpenTranslation(self)
     local offset = self.waypoint.close.rotation:GetCoords()
-    
+    self.direction =  self.direction or 0
     if self.direction == 0 then
         -- Up
         offset = offset.yAxis
@@ -62,7 +61,7 @@ local function GetOpenTranslation(self)
         offset = offset.zAxis
     end
     
-    return GetNormalizedVector(offset) * self.distance
+    return GetNormalizedVector(offset) * 10.0
 end
 
 local function InitDoorWaypoints(self)
@@ -78,7 +77,7 @@ local function InitDoorWaypoints(self)
         position = self.waypoint.close.position + transform,
         rotation = self.waypoint.close.rotation
     }
-    self.waypoint.momentum = GetNormalizedVector(transform) * self.speed
+    self.waypoint.momentum = GetNormalizedVector(transform) * (self.moveSpeed or self.speed or 3.0)
     
     -- set model to properly recalulate obstacle coordinates
     self:SetOrigin(self.waypoint.close.position)
@@ -89,17 +88,7 @@ local function InitDoorWaypoints(self)
     }
 end
 
-local function DrawDebugBox(self, lifetime)
-    if Shared.GetCheatsEnabled() or Shared.GetDevMode() then
-        local obstacle = self.waypoint.obstacle
-        local size = obstacle.radius
-        local min = obstacle.origin + Vector(-size, -size, -size)
-        local max = obstacle.origin + Vector(size, size, size)
-        DebugBox(min, max, Vector(0, 0, 0), lifetime, 1, 0, 0, 1)
-    end
-end
-
-function FuncDoor:OnCreate()
+function SiegeDoor:OnCreate()
     ScriptActor.OnCreate(self)
     self.mapblip = Vector(self:GetOrigin())
     
@@ -116,7 +105,7 @@ function FuncDoor:OnCreate()
     self.emitMessage = ""
 end
 
-function FuncDoor:OnInitialized()
+function SiegeDoor:OnInitialized()
     ScriptActor.OnInitialized(self)
     
     if Server then
@@ -152,7 +141,7 @@ function FuncDoor:OnInitialized()
     end
 end
 
-function FuncDoor:Reset()
+function SiegeDoor:Reset()
     ScriptActor.Reset(self)
     
     if Server then
@@ -164,7 +153,7 @@ function FuncDoor:Reset()
 
 end
 
-function FuncDoor:OnAdjustModelCoords(modelCoords)
+function SiegeDoor:OnAdjustModelCoords(modelCoords)
     local coords = modelCoords
     if self.scale and self.scale:GetLength() ~= 0 and coords then
         coords.xAxis = coords.xAxis * self.scale.x
@@ -174,7 +163,7 @@ function FuncDoor:OnAdjustModelCoords(modelCoords)
     return coords
 end
 
-function FuncDoor:GetScaledModelExtents()
+function SiegeDoor:GetScaledModelExtents()
     local min, max = self:GetModelExtents()
     local extents = (max or min or Vector(1, 1, 1)) * 0.5
     
@@ -187,7 +176,7 @@ function FuncDoor:GetScaledModelExtents()
     return extents
 end
 
-function FuncDoor:SyncPhysicsModel()
+function SiegeDoor:SyncPhysicsModel()
     local physModel = self:GetPhysicsModel()
     if physModel then
         local coords = self:OnAdjustModelCoords(self:GetCoords())
@@ -197,7 +186,7 @@ function FuncDoor:SyncPhysicsModel()
     end
 end
 
-function FuncDoor:GetObstaclePathingInfo()
+function SiegeDoor:GetObstaclePathingInfo()
     if Server then
         local centerpoint = self.waypoint.obstacle.origin + Vector(0, -3, 0)
         local radius = Clamp(self.waypoint.obstacle.radius, 1.5, 24.0)
@@ -210,7 +199,7 @@ function FuncDoor:GetObstaclePathingInfo()
 end
 
 -- add or remove from pathing mesh
-function FuncDoor:SyncToObstacleMesh()
+function SiegeDoor:SyncToObstacleMesh()
     if not self:GetIsOpened() and self.obstacleId == -1 then
         self:AddToMesh()
     end
@@ -220,7 +209,7 @@ function FuncDoor:SyncToObstacleMesh()
     end
 end
 
-function FuncDoor:OnUpdate(deltaTime)
+function SiegeDoor:OnUpdate(deltaTime)
     ScriptActor.OnUpdate(self, deltaTime)
     if Server then
         self:OnUpdatePosition(deltaTime)
@@ -232,10 +221,10 @@ end
 
 if Server then
     
-    function FuncDoor:SetIsOpened(state)
+    function SiegeDoor:SetIsOpened(state)
         local open = (state ~= false)
         if self.isOpened ~= open then
-            --Shared.Message("FuncDoor .. " ..  ConditionalValue(open, "opened", "closed") )
+            --Shared.Message("SiegeDoor .. " ..  ConditionalValue(open, "opened", "closed") )
             
             self.isOpened = open
             self.isMoving = false
@@ -251,8 +240,8 @@ if Server then
         end
     end
     
-    function FuncDoor:BeginOpenDoor(doorType)
-        if self.type == doorType and not self.isOpened then
+    function SiegeDoor:BeginOpenDoor(doorType)
+        if kSiegeDoorType == doorType and not self.isOpened then
             self.isMoving = true
             
             if self.emitMessage ~= "" then
@@ -268,7 +257,7 @@ if Server then
         return state > kGameState.PreGame
     end
     
-    function FuncDoor:OnUpdatePosition(deltaTime)
+    function SiegeDoor:OnUpdatePosition(deltaTime)
         -- don't update position until game is not started
         if not GetGameStartedForFuncDoor() then
             return
@@ -276,7 +265,7 @@ if Server then
         
         -- close door after game started
         if self.closeWhenGameStarts then
-            -- Shared.Message("FuncDoor .. closing!")
+            -- Shared.Message("SiegeDoor .. closing!")
             self:SetIsOpened(false)
             self.closeWhenGameStarts = false
             return
@@ -290,7 +279,7 @@ if Server then
             local delta = deltaTime * self.waypoint.momentum
             
             -- check, whether doors are already opened
-            if distance <= FuncDoor.kOpenDelta then
+            if distance <= SiegeDoor.kOpenDelta then
                 self.isOpened = true
                 self.isMoving = false
                 return
@@ -307,7 +296,7 @@ end
 
 if Client then
     
-    function FuncDoor:OnDestroy()
+    function SiegeDoor:OnDestroy()
         if self.outline then
             local model = self:GetRenderModel()
             if model ~= nil then
@@ -317,11 +306,11 @@ if Client then
         end
     end
     
-    function FuncDoor:OnModelChanged()
+    function SiegeDoor:OnModelChanged()
         self.outline = false
     end
     
-    function FuncDoor:OnUpdateOutline()
+    function SiegeDoor:OnUpdateOutline()
         local model = self:GetRenderModel()
         
         -- draw outline for closed door or when game is not started
@@ -343,12 +332,12 @@ if Client then
 
 end
 
-function FuncDoor:GetCanBeUsed(player, useSuccessTable)
+function SiegeDoor:GetCanBeUsed(player, useSuccessTable)
     useSuccessTable.useSuccess = false
 end
 
 -- minimap support
-function FuncDoor:OnGetMapBlipInfo()
+function SiegeDoor:OnGetMapBlipInfo()
     local success = true
     local blipType = kMinimapBlipType.EtherealGate
     local blipTeam = -1
@@ -358,9 +347,8 @@ function FuncDoor:OnGetMapBlipInfo()
     return success, blipType, blipTeam, isAttacked, isParasited
 end
 
-function FuncDoor:GetPositionForMinimap()
+function SiegeDoor:GetPositionForMinimap()
     return self.mapblip
 end
 
-Shared.LinkClassToMap("FuncDoor", FuncDoor.kMapName, networkVars, true)
-
+Shared.LinkClassToMap("SiegeDoor", SiegeDoor.kMapName, networkVars, true)
