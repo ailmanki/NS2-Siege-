@@ -6,14 +6,22 @@ https://github.com/CppCXY/EmmyLuaAnalyzer/blob/master/README.md
 # Mapping
 To edit/create maps for this mod, copy the file `editor_setup.xml` to `C:\Program Files (x86)\Steam\steamapps\common\Natural Selection 2\ns2` replacing the original (make a backup copy first).
 
-# sg_trimsiege
-## Original: ns2_trimsiege by ZycaR (2015)
-https://steamcommunity.com/sharedfiles/filedetails/?id=589221981
 
-- kFrontDoorTime = 360 // 6 min
-- kSiegeDoorTime = 1200 // 20 min
-- kTimeAfterSiegeOpeningToEnableSuddenDeath = 600 // +10 min (30 min game in total)
+# TODO
+## Elrond — 2/2/2025 12:54 PM
+can you make an ingame player vote to give the option to reduce door timer to 1min? standing 5min before the door doing nothing is boring
 
-Merged due to conflicts with included lua.
+## alnair — 5/22/2025 8:19 PM
+Some suggestions for siege
+- Increase marine default IPs, maybe put to 5 as default
+- Give marines med circles like we have it in vanilla
+- Increase JP fuel (x2?)
 
 
+
+# Broken Maps
+## sg_descent
+You can use a vent to circumvent the front door entirely. Was able to set up a gorge tunnel just outside of marine main before the door was open.
+
+## sg_eclipse
+There’s a vent that leads to outside of the map. Marines couldn’t get in the comm chair and the hive disappeared on aliens.

@@ -99,3 +99,6 @@ ModLoader.SetupFileHook( "lua/RoboticsFactory.lua","lua/sg_RoboticsFactory.lua",
 -- ModLoader.SetupFileHook( "lua/NS2Utility.lua","lua/sg_NS2Utility.lua","post")
 
 ModLoader.SetupFileHook("lua/Server.lua", "lua/compat_post_Server.lua", "post")
+
+-- fix commander tunnel placement
+ModLoader.SetupFileHook("lua/AlienCommander.lua", "lua/sg_AlienCommander.lua", "post")
