@@ -102,3 +102,7 @@ ModLoader.SetupFileHook("lua/Server.lua", "lua/compat_post_Server.lua", "post")
 
 -- fix commander tunnel placement
 ModLoader.SetupFileHook("lua/AlienCommander.lua", "lua/sg_AlienCommander.lua", "post")
+
+-- stronger flashlight
+ModLoader.SetupFileHook("lua/Marine.lua", "lua/sg_Marine.lua", "post")
+ModLoader.SetupFileHook("lua/ExoFlashlight_Client.lua", "lua/sg_ExoFlashlight_Client.lua", "post")
