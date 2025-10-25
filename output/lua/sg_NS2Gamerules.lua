@@ -35,23 +35,25 @@ local defaultSiegeConfig = {
     FrontDoorTime = 3 * 60,   -- 180
     SideDoorTime = 0,
     SiegeDoorTime = 18 * 60,  -- 1080
-    SuddenDeathTime = 23 * 60 -- 1380
+    SuddenDeathTime = 23 * 60, -- 1380
+    RelevancyDistance = 60
 }
 
 local oldOnInitialized = NS2Gamerules.OnInitialized
 function NS2Gamerules:OnInitialized()
     oldOnInitialized(self)
-    kMaxRelevancyDistance = self.RelevancyDistance or 60
     kPlayingTeamInitialTeamRes = self.StartingTeamRes or kPlayingTeamInitialTeamRes
     kMarineInitialIndivRes = self.StartingPlayerRes or kMarineInitialIndivRes
     kAlienInitialIndivRes = self.StartingPlayerRes or kAlienInitialIndivRes
 
+    kMaxRelevancyDistance = self.RelevancyDistance or defaultSiegeConfig.RelevancyDistance
     self.SiegeRoom = self.SiegeRoom or defaultSiegeConfig.SiegeRoom
     self.FrontDoorTime = self.FrontDoorTime or defaultSiegeConfig.FrontDoorTime
     self.SideDoorTime = self.SideDoorTime or defaultSiegeConfig.SideDoorTime
     self.SiegeDoorTime = self.SiegeDoorTime or defaultSiegeConfig.SiegeDoorTime
     self.SuddenDeathTime = self.SuddenDeathTime or defaultSiegeConfig.SuddenDeathTime
 
+    defaultSiegeConfig.RelevancyDistance = self.RelevancyDistance
     defaultSiegeConfig.SiegeRoom = self.SiegeRoom
     defaultSiegeConfig.FrontDoorTime = self.FrontDoorTime
     defaultSiegeConfig.SideDoorTime = self.SideDoorTime
@@ -194,6 +196,23 @@ if Server then
         self.suddenDeath = false
     end
 
+    local function updateConfigFile(gameRules)
+        local mapName = (Shared and Shared.GetMapName and Shared.GetMapName()) or nil
+        if not mapName or mapName == "" then
+            Shared.Message(string.format("[Siege] Map name not available; cannot load siege config."))
+            return nil
+        end
+
+        local fileName = string.format("siege/%s.json", mapName)
+
+        SaveConfigFile(fileName, {
+            SiegeRoom = gameRules.SiegeRoom,
+            FrontDoorTime =gameRules.FrontDoorTime,
+            SideDoorTime = gameRules.SideDoorTime,
+            SiegeDoorTime = gameRules.SiegeDoorTime,
+            SuddenDeathTime = gameRules.SuddenDeathTime
+            }, true)
+    end
     function NS2Gamerules:LoadSiegeConfig()
 
         local mapName = (Shared and Shared.GetMapName and Shared.GetMapName()) or nil
@@ -208,6 +227,19 @@ if Server then
         -- Using 'true' for autoCheck will add new keys from default config
         -- and save the file if it was updated.
         local siegeConfig = LoadConfigFile(fileName, defaultSiegeConfig, true)
+
+        -- Check for sidedoor entities in the map
+        local sideDoorExists = false
+        for _, _ in ientitylist(Shared.GetEntitiesWithClassname("SideDoor")) do
+            sideDoorExists = true
+            break
+        end
+
+        if not sideDoorExists then
+            siegeConfig.SideDoorTime = 0
+            updateConfigFile(self)
+            Shared.Message(string.format("[Siege] No SideDoor entities found in map '%s'; disabling Side Door timer.", mapName))
+        end
 
         if siegeConfig then
             local gameInfo = GetGameInfoEntity()
@@ -258,23 +290,6 @@ if Server then
         end
     end
 
-    local function updateConfigFile(gameRules)
-        local mapName = (Shared and Shared.GetMapName and Shared.GetMapName()) or nil
-        if not mapName or mapName == "" then
-            Shared.Message(string.format("[Siege] Map name not available; cannot load siege config."))
-            return nil
-        end
-
-        local fileName = string.format("siege/%s.json", mapName)
-
-        SaveConfigFile(fileName, {
-            SiegeRoom = gameRules.SiegeRoom,
-            FrontDoorTime =gameRules.FrontDoorTime,
-            SideDoorTime = gameRules.SideDoorTime,
-            SiegeDoorTime = gameRules.SiegeDoorTime,
-            SuddenDeathTime = gameRules.SuddenDeathTime
-            }, true)
-    end
 
     Event.Hook("Console_siegeroom", function (_, ...)
             local gameRules = GetGamerules()
@@ -285,28 +300,28 @@ if Server then
     end)
     Event.Hook("Console_frontdoortime", function (_,value)
             local gameRules = GetGamerules()
-            gameRules.FrontDoorTime = tonumber(value)
+            gameRules.FrontDoorTime = tonumber(value) or gameRules.FrontDoorTime
             updateConfigFile(gameRules)
             GetGameInfoEntity().FrontDoorTime = gameRules.FrontDoorTime
             Shared.Message(string.format("[Siege] FrontDoorTime set to: %d", gameRules.FrontDoorTime))
     end)
     Event.Hook("Console_sidedoortime", function (_,value)
             local gameRules = GetGamerules()
-            gameRules.SideDoorTime = tonumber(value)
+            gameRules.SideDoorTime = tonumber(value) or gameRules.SideDoorTime
             updateConfigFile(gameRules)
             GetGameInfoEntity().SideDoorTime = gameRules.SideDoorTime
             Shared.Message(string.format("[Siege] SideDoorTime set to: %d", gameRules.SideDoorTime))
     end)
     Event.Hook("Console_siegedoortime", function (_,value)
             local gameRules = GetGamerules()
-            gameRules.SiegeDoorTime = tonumber(value)
+            gameRules.SiegeDoorTime = tonumber(value) or gameRules.SiegeDoorTime
             updateConfigFile(gameRules)
             GetGameInfoEntity().SiegeDoorTime = gameRules.SiegeDoorTime
             Shared.Message(string.format("[Siege] SiegeDoorTime set to: %d", gameRules.SiegeDoorTime))
     end)
     Event.Hook("Console_suddendeathtime", function (_,value)
             local gameRules = GetGamerules()
-            gameRules.SuddenDeathTime = tonumber(value)
+            gameRules.SuddenDeathTime = tonumber(value) or gameRules.SuddenDeathTime
             updateConfigFile(gameRules)
             GetGameInfoEntity().SuddenDeathTime = gameRules.SuddenDeathTime
             Shared.Message(string.format("[Siege] SuddenDeathTime set to: %d", gameRules.SuddenDeathTime))
