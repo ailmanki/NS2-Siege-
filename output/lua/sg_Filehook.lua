@@ -16,12 +16,6 @@ ModLoader.SetupFileHook( "lua/CommandStructure.lua", "lua/sg_CommandStructure.lu
 -- Special dynamicaly generated obstacles for func_doors
 ModLoader.SetupFileHook( "lua/ObstacleMixin.lua", "lua/sg_ObstacleMixin.lua" , "post" )
 
--- Cyst placement will emit signal for all func_maid entites on map ( in range of 1000 )
-ModLoader.SetupFileHook( "lua/Cyst.lua", "lua/sg_Cyst.lua" , "post" )
-ModLoader.SetupFileHook( "lua/DrifterEgg.lua", "lua/sg_DrifterEgg.lua" , "post" )
-ModLoader.SetupFileHook( "lua/CommAbilities/Alien/Contamination.lua", "lua/sg_Contamination.lua" , "post" )
-ModLoader.SetupFileHook( "lua/TunnelEntrance.lua", "lua/sg_TunnelEntrance.lua" , "post" )
-
 -- Hook custom gui elements
 ModLoader.SetupFileHook( "lua/GUIWorldText.lua", "lua/sg_GUIScriptLoader.lua" , "post" )
 
