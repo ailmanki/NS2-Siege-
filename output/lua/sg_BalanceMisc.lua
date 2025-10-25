@@ -23,3 +23,9 @@ kTeamResourcePerTick = 1
 kPlayingTeamInitialTeamRes = 200   -- from 60
 kMarineInitialIndivRes = 80
 kAlienInitialIndivRes = 80
+
+-- Jetpack
+kUpgradedJetpackUseFuelRate = .095
+kJetpackingAccel = 0.8
+kJetpackUseFuelRate = .105
+kJetpackReplenishFuelRate = .055
