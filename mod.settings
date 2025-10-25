@@ -1,8 +1,40 @@
 name        = "Siege++"
 source_dir  = "source"
 output_dir  = "output"
-description = [=[A fork of [CN]Siege+++
-https://steamcommunity.com/sharedfiles/filedetails/?id=2974818616]=]
+description = [=[A fork of [url=steamcommunity.com/sharedfiles/filedetails/?id=2974818616] [CN]Siege+++ [/url]
+
+
+Configuration
+
+The mod creates a config for each map, siege/mapname.json
+The values are in seconds, SiegeRoom is the room where building is only allowed once the siege door is opened.
+{
+  "SideDoorTime":0,
+  "SiegeDoorTime":1200,
+  "SuddenDeathTime":1600,
+  "SiegeRoom":"Siege",
+  "FrontDoorTime":420
+}
+
+
+Server Commands
+
+siegeroom
+frontdoortime
+sidedoortime
+siegedoortime
+suddendeathtime
+
+
+
+Bundled Mods
+
+[url=steamcommunity.com/sharedfiles/filedetails/?id=882752783] Healing Field by Nin [/url] 
+
+
+Mapping
+
+To edit/create maps for this mod, copy the file editor_setup.xml to C:\Program Files (x86)\Steam\steamapps\common\Natural Selection 2\ns2 replacing the original (make a backup copy first).]=]
 image       = "preview.jpg"
 tag_modtype = "Custom Game Mode"
 tag_support = "Must be run on Server"
