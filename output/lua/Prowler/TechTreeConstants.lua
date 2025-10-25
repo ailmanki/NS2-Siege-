@@ -1,0 +1,11 @@
+
+debug.appendtoenum(kTechId, "Prowler")
+debug.appendtoenum(kTechId, "ProwlerMenu")
+debug.appendtoenum(kTechId, "ProwlerEgg")
+debug.appendtoenum(kTechId, "HallucinateProwler")
+debug.appendtoenum(kTechId, "UpgradeProwler")
+--debug.appendtoenum(kTechId, "Howl")
+--debug.appendtoenum(kTechId, "XenocideHowl")
+debug.appendtoenum(kTechId, "Volley")
+debug.appendtoenum(kTechId, "Rappel")
+debug.appendtoenum(kTechId, "AcidSpray")
