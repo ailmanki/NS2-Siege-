@@ -36,7 +36,6 @@ local defaultSiegeConfig = {
     SideDoorTime = 0,
     SiegeDoorTime = 18 * 60,  -- 1080
     SuddenDeathTime = 23 * 60, -- 1380
-    RelevancyDistance = 60
 }
 
 local oldOnInitialized = NS2Gamerules.OnInitialized
@@ -46,14 +45,13 @@ function NS2Gamerules:OnInitialized()
     kMarineInitialIndivRes = self.StartingPlayerRes or kMarineInitialIndivRes
     kAlienInitialIndivRes = self.StartingPlayerRes or kAlienInitialIndivRes
 
-    kMaxRelevancyDistance = self.RelevancyDistance or defaultSiegeConfig.RelevancyDistance
+    kMaxRelevancyDistance = self.RelevancyDistance or 60
     self.SiegeRoom = self.SiegeRoom or defaultSiegeConfig.SiegeRoom
     self.FrontDoorTime = self.FrontDoorTime or defaultSiegeConfig.FrontDoorTime
     self.SideDoorTime = self.SideDoorTime or defaultSiegeConfig.SideDoorTime
     self.SiegeDoorTime = self.SiegeDoorTime or defaultSiegeConfig.SiegeDoorTime
     self.SuddenDeathTime = self.SuddenDeathTime or defaultSiegeConfig.SuddenDeathTime
 
-    defaultSiegeConfig.RelevancyDistance = self.RelevancyDistance
     defaultSiegeConfig.SiegeRoom = self.SiegeRoom
     defaultSiegeConfig.FrontDoorTime = self.FrontDoorTime
     defaultSiegeConfig.SideDoorTime = self.SideDoorTime
