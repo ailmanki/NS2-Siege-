@@ -190,37 +190,86 @@ local function Unstick(client, origin)
     end
 
     local techId = player:GetTechId()
-    local bounds = GetExtents(techId)
+    local extents = GetExtents(techId)
 
-    if not bounds then return end
+    if not extents then return end
 
     local spawn
 
-    --Just move RR players to a RR spawn if they got stucked
-    if player:GetTeamNumber() == kTeamReadyRoom then
-        local spawnpoint = GetRandomClearSpawnPoint(player, Server.readyRoomSpawnList)
+    -- Helper to try to find a clear spawn around a base origin.
+    local function TryFindClearAround(baseOrigin, minRange, maxRange)
+        local capsuleHeight, capsuleRadius = GetTraceCapsuleFromExtents(extents)
+        local pos = GetRandomSpawnForCapsule(capsuleHeight, capsuleRadius, baseOrigin, minRange, maxRange, EntityFilterAll())
+        if pos then
+            pos = GetGroundAtPosition(pos, nil, PhysicsMask.AllButPCs, extents)
+        end
+        return pos
+    end
+
+    local teamNumber = player:GetTeamNumber()
+
+    if teamNumber == kTeamReadyRoom then
+        -- Ready Room works off the precomputed spawn entity list.
+        local spawnPoints = Server.readyRoomSpawnList
+        local spawnpoint = GetRandomClearSpawnPoint(player, spawnPoints)
         spawn = spawnpoint and spawnpoint:GetOrigin()
-    else
-        local height, radius = GetTraceCapsuleFromExtents( bounds )
-        local resourceNear
-        local i = 1
-
-        repeat
-            spawn = GetRandomSpawnForCapsule( height, radius, origin, 2, 10, EntityFilterAll() )
-
-            if spawn then
-                resourceNear = #GetEntitiesWithinRange( "ResourcePoint", spawn, 2 ) > 0
+    elseif teamNumber == kTeam1Index then
+        -- Marines: mirror real spawns by using active Infantry Portals, fallback to Command Stations.
+        local candidates = { }
+        for _, ip in ipairs(GetEntitiesForTeam("InfantryPortal", kTeam1Index)) do
+            if ip.GetIsAlive and ip:GetIsAlive() and GetIsUnitActive(ip) then
+                local spawnOrigin = ip.GetAttachPointOrigin and ip:GetAttachPointOrigin("spawn_point") or ip:GetOrigin()
+                table.insert(candidates, { ent = ip, origin = spawnOrigin })
             end
-
-            i = i + 1
-        until not resourceNear or i > 100
-
+        end
+        -- Fallback to Command Stations if no IP available.
+        if #candidates == 0 then
+            for _, cs in ipairs(GetEntitiesForTeam("CommandStation", kTeam1Index)) do
+                if cs.GetIsAlive and cs:GetIsAlive() and cs.GetIsBuilt and cs:GetIsBuilt() then
+                    local spawnOrigin = cs:GetOrigin()
+                    table.insert(candidates, { ent = cs, origin = spawnOrigin })
+                end
+            end
+        end
+        -- Prefer closest to the player.
+        table.sort(candidates, function(a, b)
+            return (a.origin - origin):GetLengthSquared() < (b.origin - origin):GetLengthSquared()
+        end)
+        for i = 1, #candidates do
+            local pos = TryFindClearAround(candidates[i].origin, 0.5, 2.5)
+            if pos then
+                spawn = pos
+                break
+            end
+        end
+    elseif teamNumber == kTeam2Index then
+        -- Aliens: mirror egg/hive spawning by selecting a clear point around a live Hive.
+        local candidates = { }
+        for _, hive in ipairs(GetEntitiesForTeam("Hive", kTeam2Index)) do
+            if hive.GetIsAlive and hive:GetIsAlive() and hive.GetIsBuilt and hive:GetIsBuilt() then
+                local spawnOrigin = hive.GetModelOrigin and hive:GetModelOrigin() or hive:GetOrigin()
+                table.insert(candidates, { ent = hive, origin = spawnOrigin })
+            end
+        end
+        -- Prefer closest hive to the player.
+        table.sort(candidates, function(a, b)
+            return (a.origin - origin):GetLengthSquared() < (b.origin - origin):GetLengthSquared()
+        end)
+        for i = 1, #candidates do
+            local pos = TryFindClearAround(candidates[i].origin, 4, 22)
+            if pos then
+                spawn = pos
+                break
+            end
+        end
+    else
+        return
     end
 
     if spawn then
         NotifyPlayer(player, "Successfully unstuck!")
-        Log(string.format("Successfully unstuck %s [%s]", player:GetName(), player:GetSteamId()))
-        player:SetOrigin(spawn)
+         Log(string.format("Successfully unstuck %s [%s]", player:GetName(), player:GetSteamId()))
+         player:SetOrigin(spawn)
         return
     end
 
