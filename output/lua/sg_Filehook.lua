@@ -93,3 +93,6 @@ ModLoader.SetupFileHook("lua/AlienCommander.lua", "lua/sg_AlienCommander.lua", "
 -- stronger flashlight
 ModLoader.SetupFileHook("lua/Marine.lua", "lua/sg_Marine.lua", "post")
 ModLoader.SetupFileHook("lua/ExoFlashlight_Client.lua", "lua/sg_ExoFlashlight_Client.lua", "post")
+
+-- override console unstuck command without replacing the file
+ModLoader.SetupFileHook( "lua/ConsoleCommands_Server.lua", "lua/sg_ConsoleCommands_Server.lua" , "replace" )
