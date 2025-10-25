@@ -6,9 +6,6 @@
 ModLoader.SetupFileHook( "lua/GameInfo.lua", "lua/sg_GameInfo.lua" , "post" )
 ModLoader.SetupFileHook( "lua/NS2Gamerules.lua", "lua/sg_NS2Gamerules.lua" , "post" )
 
--- Truce mode untill front/siege doors are closed
-ModLoader.SetupFileHook( "lua/DamageMixin.lua", "lua/sg_DamageMixin.lua" , "post" )
-
 -- Sudden death mode disable repair of CommandStation and heal Hive
 ModLoader.SetupFileHook( "lua/CommandStation.lua", "lua/sg_CommandStation.lua" , "post" )
 ModLoader.SetupFileHook( "lua/CommandStructure.lua", "lua/sg_CommandStructure.lua" , "post" )
@@ -29,11 +26,11 @@ ModLoader.SetupFileHook( "lua/TechTree_Server.lua", "lua/sg_TechTree_Server.lua"
 
 ModLoader.SetupFileHook( "lua/TechData.lua", "lua/sg_TechData.lua" , "post" )
 
--- fix hive healing (yes, it's a replace.... the file is garbo)
+-- fix hive healing
 ModLoader.SetupFileHook( "lua/Hive_Server.lua", "lua/sg_Hive_Server.lua" , "replace" )
 
 
--- fix concede sequence errors (yes, also a replace, yes, the file is garbo as well)
+-- fix concede sequence errors
 ModLoader.SetupFileHook( "lua/ConcedeSequence.lua", "lua/sg_ConcedeSequence.lua" , "replace" )
 
 -- enable commander bots
