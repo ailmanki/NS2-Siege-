@@ -15,7 +15,7 @@ local techDisableList = {
 local ns2_SetTechNodeChanged = TechTree.SetTechNodeChanged
 function TechTree:SetTechNodeChanged(node, logMsg)
     if techDisableList[node:GetTechId()] then
-        local front, siege, suddendeath = GetGameInfoEntity():GetSiegeTimes()
+        local front, side, siege, suddendeath = GetGameInfoEntity():GetSiegeTimes()
         if front > 0 and siege > 0 then
             node.available = false
             return

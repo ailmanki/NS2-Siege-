@@ -7,7 +7,7 @@ function GetRoboticsFactoryBuildValid(techId, origin, normal, player)
             return isValid
         end
 
-        local front, siege,_ = gameInfo:GetSiegeTimes()
+        local front,  side, siege,_ = gameInfo:GetSiegeTimes()
 
         if (front > 0) then
             local ents = GetEntitiesWithinXZRange("FuncDoor", origin, 12)

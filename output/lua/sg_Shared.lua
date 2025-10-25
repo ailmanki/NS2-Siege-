@@ -24,8 +24,8 @@ Script.Load("lua/sg_NetworkMessages.lua")
 
 kFrontDoorType = 0
 kSiegeDoorType = 1
+kSideDoorType = 2
 
 kDoorTypeToSiegeMessage = {}
 kDoorTypeToSiegeMessage[kFrontDoorType] = kSiegeMessageTypes.FrontDoorOpened
 kDoorTypeToSiegeMessage[kSiegeDoorType] = kSiegeMessageTypes.SiegeDoorOpened
-

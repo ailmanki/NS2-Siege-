@@ -436,7 +436,7 @@ function GetIsBuildLegal(techId, position, angle, snapRadius, player, ignoreEnti
     if ignoreEntities then
         filter = EntityFilterAll()
     end
-    
+
     -- Snap to ground
     local legalPosition = GetGroundAtPointWithCapsule(position, extents, PhysicsMask.CommanderBuild, CreateFilter(ignoreEntity))
     
@@ -498,7 +498,7 @@ function GetIsBuildLegal(techId, position, angle, snapRadius, player, ignoreEnti
         end
         
     end
-    
+
     if legalBuild then
     
         -- dont allow dropping on infestation
@@ -570,6 +570,16 @@ function GetIsBuildLegal(techId, position, angle, snapRadius, player, ignoreEnti
             errorString = "COMMANDERERROR_INVALID_PLACEMENT"
         end
         
+    end
+
+    if legalBuild then
+        local location = GetLocationForPoint(legalPosition)
+        local locationName = location and location:GetName() or nil
+        local gameInfo = GetGameInfoEntity()
+        if not gameInfo:GetSiegeDoorOpen() and gameInfo:GetSiegeRoom() == locationName then
+            legalBuild = false
+            errorString = "Siege is off-limits until doors are open"
+        end
     end
 
     if legalBuild and GetIsTunnelTech(techId) then

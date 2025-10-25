@@ -3,7 +3,7 @@
 local safeCommandStuctureRadius = 25
 
 function CanCommandStructureBeBuilt(techId, origin, normal, commander)
-	local front, siege, suddendeath, gameLength = GetGameInfoEntity():GetSiegeTimes()
+	local front,  side, siege, suddendeath, gameLength = GetGameInfoEntity():GetSiegeTimes()
     
     if front > 0 then
     
