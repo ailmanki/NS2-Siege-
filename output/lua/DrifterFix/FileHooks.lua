@@ -1,0 +1,1 @@
+ModLoader.SetupFileHook( "lua/Drifter.lua", "lua/DrifterFix/Drifter.lua", "post" )

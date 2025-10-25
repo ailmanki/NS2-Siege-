@@ -1,0 +1,4 @@
+modEntry = {
+	FileHooks = "lua/DrifterFix/FileHooks.lua",
+	Priority = 50
+}
