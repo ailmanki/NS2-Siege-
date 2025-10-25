@@ -32,50 +32,6 @@ function BuildTechData()
         end
 
     end
---    
---    table.insert(techData,{
---        [kTechDataId] = kTechId.AdvancedWelding,
---        [kTechDataCostKey] = kAdvancedWeldingResearchCost,
---        [kTechDataResearchTimeKey] = kAdvancedWeldingResearchTime,
---        [kTechDataDisplayName] = "RESEARCH_ADVANCEDWELDING",
---        [kTechDataTooltipInfo] = "RESEARCH_ADVANCEDWELDING_TOOLTIP", 
---    } )
---    
---    table.insert(techData, {
---        [kTechDataId] = kTechId.AntiStompJetpackTech,
---        [kTechDataCostKey] = kAntiStompJetpackTechResearchCost,
---        [kTechDataResearchTimeKey] = kAntiStompJetpackTechResearchTime,
---        [kTechDataDisplayName] = "RESEARCH_ANTISTOMPJETPACK",
---        [kTechDataTooltipInfo] = "RESEARCH_ANTISTOMPJETPACK_TOOLTIP",
---        [kTechDataResearchName] = "RESEARCH_ANTISTOMPJETPACK",
---    })
---
---    table.insert(techData, {
---        [kTechDataId] = kTechId.InfantryPortal,
---        [kTechDataHint] = "INFANTRY_PORTAL_HINT",
---        [kTechDataSupply] = kInfantryPortalSupply,
---        [kTechDataGhostModelClass] = "MarineGhostModel",
---        [kTechDataRequiresPower] = true,
---        [kTechDataGhostGuidesMethod] = GetInfantryPortalGhostGuides,
---        [kTechDataBuildRequiresMethod] = GetCommandStationIsBuilt,
---        [kTechDataMapName] = InfantryPortal.kMapName,
---        [kTechDataDisplayName] = "INFANTRY_PORTAL",
---        [kTechDataCostKey] = kInfantryPortalCost,
---        [kTechDataPointValue] = kInfantryPortalPointValue,
---        [kTechDataBuildTime] = kInfantryPortalBuildTime,
---        [kTechDataMaxHealth] = kInfantryPortalHealth,
---        [kTechDataMaxArmor] = kInfantryPortalArmor,
---        [kTechDataModel] = InfantryPortal.kModelName,
---        [kStructureBuildNearClass] = "CommandStation",
---        [kStructureAttachId] = {kTechId.CommandStation,kTechId.StandardStation,kTechId.ArmorStation,kTechId.ExplosiveStation},
---        [kStructureAttachRange] = kInfantryPortalAttachRange,
---        [kTechDataEngagementDistance] = kInfantryPortalEngagementDistance,
---        [kTechDataHotkey] = Move.P,
---        [kTechDataNotOnInfestation] = kPreventMarineStructuresOnInfestation,
---        [kTechDataTooltipInfo] = "INFANTRY_PORTAL_TOOLTIP",
---        [kTechDataObstacleRadius] = 1.125,
---        [kTechDataPersonalResOnKillKey] = kInfantryPortalPersonalResOnKill,
---        [kTechDataTeamResOnKillKey] = kInfantryPortalTeamResOnKill,
---    })
+
     return techData
 end

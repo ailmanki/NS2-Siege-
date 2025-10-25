@@ -35,18 +35,6 @@ function Shockwave:Detonate()
                         -- if not HasMixin(enemy, "GroundMove") or enemy:GetIsOnGround() then
                         --     self:TriggerEffects("shockwave_hit", { effecthostcoords = enemy:GetCoords() })
                         -- end
-
-                        -- if  GetHasTech(self,kTechId.AntiStompJetpackTech) then
-                        --     if enemy:isa("JetpackMarine") and enemy:GetHasEnoughFuelAntiStomp() then
-                        --         --enemy:SetStun(kDisruptAntiStompJetpackerTime)
-                        --         enemy:GetFuelAfterAntiStomp()
-                        --         enemy:TriggerJetpackStartEffect()  
-                        --     else
-                        --         if HasMixin(enemy, "Stun") then
-                        --             enemy:SetStun(kDisruptMarineTime)
-                        --             end
-                        --     end   
-                        -- end  
                                 
                         if not HasMixin(enemy, "GroundMove") or enemy:GetIsOnGround() then
                             self:TriggerEffects("shockwave_hit", { effecthostcoords = enemy:GetCoords() })

@@ -37,7 +37,6 @@ ModLoader.SetupFileHook( "lua/Hive_Server.lua", "lua/sg_Hive_Server.lua" , "repl
 ModLoader.SetupFileHook( "lua/ConcedeSequence.lua", "lua/sg_ConcedeSequence.lua" , "replace" )
 
 -- enable commander bots
---ModLoader.SetupFileHook( "lua/VotingAddCommanderBots.lua", "lua/sg_VotingAddCommanderBots.lua" , "post" )
 --ModLoader.SetupFileHook( "lua/bots/BotUtils.lua", "lua/bots/sg_BotUtils.lua" , "post" )
 --ModLoader.SetupFileHook( "lua/bots/CommonActions.lua", "lua/bots/sg_CommonActions.lua" , "post" )
 ----ModLoader.SetupFileHook( "lua/bots/CommanderBrain.lua", "lua/bots/sg_CommanderBrain.lua" , "post" )
@@ -65,11 +64,9 @@ ModLoader.SetupFileHook( "lua/MarineTeam.lua", "lua/sg_MarineTeam.lua" , "post" 
 ModLoader.SetupFileHook( "lua/PlayingTeam.lua", "lua/sg_PlayingTeam.lua" , "post" )
 ModLoader.SetupFileHook( "lua/TechTreeButtons.lua", "lua/sg_TechTreeButtons.lua" , "post" )
 ModLoader.SetupFileHook( "lua/TechTreeConstants.lua", "lua/sg_TechTreeConstants.lua" , "post" )
-ModLoader.SetupFileHook( "lua/Weapons/Marine/Welder.lua", "lua/sg_Welder.lua" , "post" )
 ModLoader.SetupFileHook( "lua/BalanceMisc.lua", "lua/sg_BalanceMisc.lua" , "post" )
 --diasblead,unable to load the right animation
 --ModLoader.SetupFileHook( "lua/MarineWeaponEffects.lua", "lua/Effects/sg_MarineWeaponEffects.lua" , "post" )
-ModLoader.SetupFileHook( "lua/TeamInfo.lua", "lua/sg_TeamInfo.lua" , "post" )
 
 --Modify the judgment of placing tunnels
 ModLoader.SetupFileHook( "lua/BuildUtility.lua", "lua/sg_BuildUtility.lua" , "post" )
@@ -77,7 +74,6 @@ ModLoader.SetupFileHook( "lua/BuildUtility.lua", "lua/sg_BuildUtility.lua" , "po
 --antistomp_jetpackers
 ModLoader.SetupFileHook( "lua/JetpackMarine.lua", "lua/sg_JetpackMarine.lua" , "post" )
 ModLoader.SetupFileHook( "lua/Weapons/Alien/Shockwave.lua","lua/sg_Shockwave.lua","post")
-ModLoader.SetupFileHook( "lua/PrototypeLab.lua","lua/sg_PrototypeLab.lua","post")
 
 --skulk ability changes
 ModLoader.SetupFileHook( "lua/Skulk.lua","lua/sg_Skulk.lua","post")

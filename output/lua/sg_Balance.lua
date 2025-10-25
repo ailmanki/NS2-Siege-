@@ -56,13 +56,7 @@ kBileBombDuration = 5
 kBileBombSplashRadius = 7.5
 kBileBombDotInterval = 0.4
 
---enhance the welder's rate
-kAdvancedWeldingResearchCost=25
-kAdvancedWeldingResearchTime=70
-
 --AntiJetpack
-kAntiStompJetpackTechResearchCost=20
-kAntiStompJetpackTechResearchTime=60
 kAntiStompNeedFuel=0.4
 kDisruptAntiStompJetpackerTime=0.3
 

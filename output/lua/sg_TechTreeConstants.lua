@@ -85,7 +85,6 @@
 --     --Proto Supply Upgrade
 --     'ExosuitLockdownTech', 'ExosuitUpgradeTech',
 --     'JetpackFuelTech', 'JetpackArmorTech',
---     'AntiStompJetpackTech',
     
 --     -- MAC (build bot) abilities
 --     'MACEMP', 'Welding',
@@ -267,5 +266,3 @@
 -- }
 
 --Researches
-debug.appendtoenum(kTechId,"AdvancedWelding")
-debug.appendtoenum(kTechId,"AntiStompJetpackTech")
