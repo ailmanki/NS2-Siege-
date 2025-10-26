@@ -579,7 +579,7 @@ local objectsPerViewList =
     [gCustomizeSceneData.kViewLabels.ExoBay] = { "ExoMiniguns", "ExoRailguns" },
     [gCustomizeSceneData.kViewLabels.MarineStructures] = { "CommandStation", "Extractor", "Mac", "Arc" },
 
-    [gCustomizeSceneData.kViewLabels.AlienLifeforms] = { "Skulk", "Gorge", "Lerk", "Fade", "Onos", "Babbler", "BabblerTwo", "BabblerThree", "Hydra", "Clog", "BabblerEgg" },
+    [gCustomizeSceneData.kViewLabels.AlienLifeforms] = { "Skulk", "Gorge", "Lerk", "Fade", "Onos", "Prowler", "Babbler", "BabblerTwo", "BabblerThree", "Hydra", "Clog", "BabblerEgg" },
     [gCustomizeSceneData.kViewLabels.AlienStructures] = { "Hive", "Harvester", "Egg", "Cyst", "Drifter" },
     [gCustomizeSceneData.kViewLabels.AlienTunnels] = { "Tunnel" },
 }
@@ -750,6 +750,13 @@ function CustomizeScene:PrimeLookupSceneObjectIndicies()
             kLifeformSceneIndicies[5] = onIdx
         end
     end
+
+    if kLifeformSceneIndicies[6] == -1 then
+        local o, plIdx = self:GetSceneObject("Prowler")
+        if plIdx then
+            kLifeformSceneIndicies[6] = plIdx
+        end
+    end
 end
 
 function CustomizeScene:DistanceActivationResult( viewLabelActivation )
@@ -842,6 +849,7 @@ local sceneObjectNamesList =
     ["Lerk"] = "lerk",
     ["Fade"] = "fade",
     ["Onos"] = "onos",
+    ["Prowler"] = "prowler",
     ["Hive"] = "hive",
     ["Harvester"] = "harvester",
     ["Egg"] = "egg",
@@ -886,6 +894,7 @@ local sceneObjectVariantOptionsKeys =
     ["Lerk"] = "lerkVariant",
     ["Fade"] = "fadeVariant",
     ["Onos"] = "onosVariant",
+    ["Prowler"] = "prowlerVariant",
     ["Hive"] = "alienStructuresVariant",
     ["Harvester"] = "harvesterVariant",
     ["Egg"] = "eggVariant",
@@ -987,6 +996,7 @@ local variantSelectObjectsChangelist =  --?? Move to scene data file?
     [gCustomizeSceneData.kSceneObjectReferences.Lerk] = { "Lerk" },
     [gCustomizeSceneData.kSceneObjectReferences.Fade] = { "Fade" },
     [gCustomizeSceneData.kSceneObjectReferences.Onos] = { "Onos" },
+    [gCustomizeSceneData.kSceneObjectReferences.Prowler] = { "Prowler" },
 
     [gCustomizeSceneData.kSceneObjectReferences.Babbler] = { "Babbler", "BabblerTwo", "BabblerThree" },
     [gCustomizeSceneData.kSceneObjectReferences.Clog] = { "Clog" },

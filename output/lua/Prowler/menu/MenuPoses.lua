@@ -64,6 +64,8 @@ function MenuPoses_SetPose(pose, modelType, destroy)
         modelPath =  "models/alien/" .. modelType .. "/" .. modelType .. GetVariantModel(kFadeVariantsData, options.fadeVariant)
     elseif modelType == "onos" then
         modelPath =  "models/alien/" .. modelType .. "/" .. modelType .. GetVariantModel(kOnosVariantsData, options.onosVariant)
+    elseif modelType == "Prowler" then
+        modelPath =  "models/alien/" .. modelType .. "/" .. modelType .. GetVariantModel(kProwlerVariantsData, options.prowlerVariant)
     elseif modelType == "exo" then
         modelPath =  "models/marine/exosuit/exosuit_mm.model"
     elseif modelType == "rifle" then

@@ -19,7 +19,7 @@ Script.Load("lua/Prowler/ReadyRoomRappel.lua")
 Script.Load("lua/Prowler/XenocideHowl.lua")
 Script.Load("lua/Weapons/PredictedProjectile.lua")
 Script.Load("lua/IdleMixin.lua")
---Script.Load("lua/SkulkVariantMixin.lua")
+Script.Load("lua/Prowler/ProwlerVariantMixin.lua")
 
 class 'Prowler' (Alien)
 
@@ -105,6 +105,7 @@ AddMixinNetworkVars(DissolveMixin, networkVars)
 AddMixinNetworkVars(BabblerClingMixin, networkVars)
 AddMixinNetworkVars(TunnelUserMixin, networkVars)
 AddMixinNetworkVars(IdleMixin, networkVars)
+AddMixinNetworkVars(ProwlerVariantMixin, networkVars)
 
 
 function Prowler:OnCreate()
@@ -123,6 +124,7 @@ function Prowler:OnCreate()
     InitMixin(self, DissolveMixin)
     InitMixin(self, BabblerClingMixin)
     InitMixin(self, TunnelUserMixin)
+    InitMixin(self, ProwlerVariantMixin)
     InitMixin(self, PredictedProjectileShooterMixin)
     
     if Client then

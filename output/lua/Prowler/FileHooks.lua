@@ -43,3 +43,12 @@ ModLoader.SetupFileHook( "lua/TeleportTrigger.lua", "lua/Prowler/TeleportTrigger
 --ModLoader.SetupFileHook( "lua/bots/SkulkBrain_Data.lua", "lua/Prowler/bots/SkulkBrain_Data.lua", "replace" )
 
 ModLoader.SetupFileHook( "lua/Combat/Globals.lua", "lua/Prowler/CombatGlobals.lua", "post" )
+
+-- Prowler Variants
+ModLoader.SetupFileHook( "lua/menu2/PlayerScreen/Customize/CustomizeScene.lua", "lua/Prowler/menu2/PlayerScreen/Customize/CustomizeScene.lua", "replace" )
+ModLoader.SetupFileHook( "lua/menu2/PlayerScreen/Customize/CustomizeSceneData.lua", "lua/Prowler/menu2/PlayerScreen/Customize/CustomizeSceneData.lua", "replace" )
+ModLoader.SetupFileHook( "lua/menu2/PlayerScreen/Customize/GUIMenuCustomizeScreen.lua", "lua/Prowler/menu2/PlayerScreen/Customize/GUIMenuCustomizeScreen.lua", "replace" )
+
+ModLoader.SetupFileHook( "lua/menu/GUIMainMenu_Customize.lua", "lua/Prowler/menu/GUIMainMenu_Customize.lua", "replace" )
+ModLoader.SetupFileHook( "lua/menu/MenuPoses.lua", "lua/Prowler/menu/MenuPoses.lua", "replace" )
+ModLoader.SetupFileHook( "lua/NetworkMessages.lua", "lua/Prowler/NetworkMessages.lua", "post" )

@@ -446,7 +446,15 @@ local function UpdateAlienLifeformsButtonSize(self, scene)
             ) 
         )
     end
-    
+
+    if self.worldProwlerButton then
+        self.worldProwlerButton:SetPoints(
+            scene:GetScenePointsToScreenPointList(
+                GetCustomizeWorldButtonPoints( gCustomizeSceneData.kWorldButtonLabels.Prowler )
+            )
+        )
+    end
+
     if self.worldClogButton then
         self.worldClogButton:SetPoints( 
             scene:GetScenePointsToScreenPointList( 
@@ -1317,6 +1325,7 @@ function GUIMenuCustomizeScreen:InitAlienLifeformElements(scene)
     local lerkStr = Locale.ResolveString("LERK")
     local fadeStr = Locale.ResolveString("FADE")
     local onosStr = Locale.ResolveString("ONOS")
+    local prowlerStr = Locale.ResolveString("PROWLER")
 
     local clogStr = Locale.ResolveString("CLOG")
     local hydraStr = Locale.ResolveString("HYDRA")
@@ -1328,6 +1337,7 @@ function GUIMenuCustomizeScreen:InitAlienLifeformElements(scene)
     local initLerkLbl = GetCustomizeScene():GetCustomizableObjectVariantName( "Lerk" ) .. " " .. lerkStr
     local initFadeLbl = GetCustomizeScene():GetCustomizableObjectVariantName( "Fade" ) .. " " .. fadeStr
     local initOnosLbl = GetCustomizeScene():GetCustomizableObjectVariantName( "Onos" ) .. " " .. onosStr
+    local initProwlerLbl = GetCustomizeScene():GetCustomizableObjectVariantName( "Prowler" ) .. " " .. prowlerStr
 
     local initClogLbl = GetCustomizeScene():GetCustomizableObjectVariantName( "Clog" ) .. " " .. clogStr
     local initHydraLbl = GetCustomizeScene():GetCustomizableObjectVariantName( "Hydra" ) .. " " .. hydraStr
@@ -1389,6 +1399,18 @@ function GUIMenuCustomizeScreen:InitAlienLifeformElements(scene)
     self.worldOnosButton:SetVisible(false)
     self.worldOnosButton:SetTooltip(initOnosLbl)
 
+
+    self.worldProwlerButton = CreateGUIObject( "worldProwlerButton", GUIMenuCustomizeWorldButton, self )
+    self.worldProwlerButton:SetPoints(
+        scene:GetScenePointsToScreenPointList(
+            GetCustomizeWorldButtonPoints( gCustomizeSceneData.kWorldButtonLabels.Prowler )
+        )
+    )
+    --self.worldProwlerButton:SetColor( Color(0.5, 0, 1, 0.2) )
+    self.worldProwlerButton:SetLayer( kMainWorldButtonsLayer )
+    self.worldProwlerButton:SetVisible(false)
+    self.worldProwlerButton:SetTooltip(initProwlerLbl)
+
     self.worldClogButton = CreateGUIObject( "worldClogButton", GUIMenuCustomizeWorldButton, self )
     self.worldClogButton:SetPoints( 
         scene:GetScenePointsToScreenPointList( 
@@ -1447,6 +1469,7 @@ function GUIMenuCustomizeScreen:InitAlienLifeformElements(scene)
         self.worldLerkButton,
         self.worldFadeButton,
         self.worldOnosButton,
+        self.worldProwlerButton,
 
         self.worldClogButton,
         self.worldHydraButton,
@@ -1513,6 +1536,17 @@ function GUIMenuCustomizeScreen:InitAlienLifeformElements(scene)
         _self:UpdateBuyButton( not ownsVariant and nextVariantItemId or -1 )
     end
 
+    local CycleCosmeticProwlerPrev = function(self)
+        local label, ownsVariant, prevVariantItemId = GetCustomizeScene():CycleCosmetic( gCustomizeSceneData.kSceneObjectReferences.Prowler, -1 )
+        self:SetTooltip(label .. " " .. prowlerStr)
+        _self:UpdateBuyButton( not ownsVariant and prevVariantItemId or -1 )
+    end
+    local CycleCosmeticProwlerNext = function(self)
+        local label, ownsVariant, nextVariantItemId = GetCustomizeScene():CycleCosmetic( gCustomizeSceneData.kSceneObjectReferences.Prowler, 1 )
+        self:SetTooltip(label .. " " .. prowlerStr)
+        _self:UpdateBuyButton( not ownsVariant and nextVariantItemId or -1 )
+    end
+
     local CycleCosmeticClogPrev = function(self)
         local label, ownsVariant, prevVariantItemId = GetCustomizeScene():CycleCosmetic( gCustomizeSceneData.kSceneObjectReferences.Clog, -1 )
         self:SetTooltip(label .. " " .. clogStr)
@@ -1571,6 +1605,9 @@ function GUIMenuCustomizeScreen:InitAlienLifeformElements(scene)
     
     self.worldOnosButton:SetMouseRightClickCallback( CycleCosmeticOnosPrev )
     self.worldOnosButton:SetPressedCallback( CycleCosmeticOnosNext )
+
+    self.worldProwlerButton:SetMouseRightClickCallback( CycleCosmeticProwlerPrev )
+    self.worldProwlerButton:SetPressedCallback( CycleCosmeticProwlerNext )
 
     self.worldClogButton:SetMouseRightClickCallback( CycleCosmeticClogPrev )
     self.worldClogButton:SetPressedCallback( CycleCosmeticClogNext )
@@ -2399,6 +2436,7 @@ function GUIMenuCustomizeScreen:ResetAlienLifeformsElements()
     local lerkStr = Locale.ResolveString("LERK")
     local fadeStr = Locale.ResolveString("FADE")
     local onosStr = Locale.ResolveString("ONOS")
+    local prowlerStr = Locale.ResolveString("PROWLER")
 
     local clogStr = Locale.ResolveString("CLOG")
     local hydraStr = Locale.ResolveString("HYDRA")
@@ -2410,6 +2448,7 @@ function GUIMenuCustomizeScreen:ResetAlienLifeformsElements()
     local initLerkLbl = GetCustomizeScene():GetCustomizableObjectVariantName( "Lerk" ) .. " " .. lerkStr
     local initFadeLbl = GetCustomizeScene():GetCustomizableObjectVariantName( "Fade" ) .. " " .. fadeStr
     local initOnosLbl = GetCustomizeScene():GetCustomizableObjectVariantName( "Onos" ) .. " " .. onosStr
+    local initProwlerLbl = GetCustomizeScene():GetCustomizableObjectVariantName( "Prowler" ) .. " " .. prowlerStr
 
     local initClogLbl = GetCustomizeScene():GetCustomizableObjectVariantName( "Clog" ) .. " " .. clogStr
     local initHydraLbl = GetCustomizeScene():GetCustomizableObjectVariantName( "Hydra" ) .. " " .. hydraStr
@@ -2421,6 +2460,7 @@ function GUIMenuCustomizeScreen:ResetAlienLifeformsElements()
     self.worldLerkButton:SetTooltip(initLerkLbl)
     self.worldFadeButton:SetTooltip(initFadeLbl)
     self.worldOnosButton:SetTooltip(initOnosLbl)
+    self.worldOProwlerButton:SetTooltip(initProwlerLbl)
 
     self.worldClogButton:SetTooltip(initClogLbl)
     self.worldHydraButton:SetTooltip(initHydraLbl)

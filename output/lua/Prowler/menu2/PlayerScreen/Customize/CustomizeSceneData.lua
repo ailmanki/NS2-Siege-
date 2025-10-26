@@ -126,6 +126,7 @@ gCustomizeSceneData.kGorgeVariantsOption = "gorgeVariant"
 gCustomizeSceneData.kLerkVariantsOption = "lerkVariant"
 gCustomizeSceneData.kFadeVariantsOption = "fadeVariant"
 gCustomizeSceneData.kOnosVariantsOption = "onosVariant"
+gCustomizeSceneData.kProwlerVariantsOption = "prowlerVariant"
 gCustomizeSceneData.kTunnelsVariantOption = "alienTunnelsVariant"
 gCustomizeSceneData.kAlienStructuresVariantOption = "alienStructuresVariant"
 gCustomizeSceneData.kHarvesterVariantOption = "harvesterVariant"
@@ -200,7 +201,7 @@ gCustomizeSceneData.kSceneObjectReferences = enum({
 
     "Hive", "Harvester", "Egg", "Cyst", "Drifter",
     "Tunnel",
-    "Skulk", "Lerk", "Gorge", "Fade", "Onos",
+    "Skulk", "Lerk", "Gorge", "Fade", "Onos", "Prowler",
     "Babbler", "Clog", "Hydra", "BabblerEgg"
 })
 gCustomizeSceneData.kSceneObjectVariantsMap = 
@@ -235,6 +236,7 @@ gCustomizeSceneData.kSceneObjectVariantsMap =
     [gCustomizeSceneData.kSceneObjectReferences.Lerk] = kLerkVariants,
     [gCustomizeSceneData.kSceneObjectReferences.Fade] = kFadeVariants,
     [gCustomizeSceneData.kSceneObjectReferences.Onos] = kOnosVariants,
+    [gCustomizeSceneData.kSceneObjectReferences.Prowler] = kProwlerVariants,
 
     [gCustomizeSceneData.kSceneObjectReferences.Clog] = kClogVariants,
     [gCustomizeSceneData.kSceneObjectReferences.Hydra] = kHydraVariants,
@@ -274,6 +276,7 @@ gCustomizeSceneData.kSceneObjectVariantsDataMap =
     [gCustomizeSceneData.kSceneObjectReferences.Lerk] = kLerkVariantsData,
     [gCustomizeSceneData.kSceneObjectReferences.Fade] = kFadeVariantsData,
     [gCustomizeSceneData.kSceneObjectReferences.Onos] = kOnosVariantsData,
+    [gCustomizeSceneData.kSceneObjectReferences.Prowler] = kProwlerVariantsData,
 
     [gCustomizeSceneData.kSceneObjectReferences.Clog] = kClogVariantsData,
     [gCustomizeSceneData.kSceneObjectReferences.Hydra] = kHydraVariantsData,
@@ -329,6 +332,7 @@ gCustomizeSceneData.kSceneViewCustomizableObjectsMap =
         gCustomizeSceneData.kSceneObjectReferences.Lerk,
         gCustomizeSceneData.kSceneObjectReferences.Fade,
         gCustomizeSceneData.kSceneObjectReferences.Onos,
+        gCustomizeSceneData.kSceneObjectReferences.Prowler,
 
         gCustomizeSceneData.kSceneObjectReferences.Clog,
         gCustomizeSceneData.kSceneObjectReferences.Hydra,
@@ -369,6 +373,7 @@ gCustomizeSceneData.kOptionsFieldVariantDataMap =
     [gCustomizeSceneData.kLerkVariantsOption] = kLerkVariantsData,
     [gCustomizeSceneData.kFadeVariantsOption] = kFadeVariantsData,
     [gCustomizeSceneData.kOnosVariantsOption] = kOnosVariantsData,
+    [gCustomizeSceneData.kProwlerVariantsOption] = kProwlerVariantsData,
 
     [gCustomizeSceneData.kGorgeHydraVariantsOption] = kHydraVariantsData,
     [gCustomizeSceneData.kGorgeClogVariantsOption] = kClogVariantsData,
@@ -554,6 +559,18 @@ gCustomizeSceneData.kVariantItemOptionsMap = --Note: does not contain "default" 
     [kKodiakOnosItemId] = gCustomizeSceneData.kOnosVariantsOption,
     [kAbyssOnosItemId] = gCustomizeSceneData.kOnosVariantsOption,
     [kAuricOnosItemId] = gCustomizeSceneData.kOnosVariantsOption,
+
+
+    [kKodiakSkulkItemId] = gCustomizeSceneData.kProwlerVariantsOption,
+    [kAbyssSkulkItemId] = gCustomizeSceneData.kProwlerVariantsOption,
+    [kShadowSkulkItemId] = gCustomizeSceneData.kProwlerVariantsOption,
+    [kReaperSkulkItemId] = gCustomizeSceneData.kProwlerVariantsOption,
+    [kNocturneSkulkItemId] = gCustomizeSceneData.kProwlerVariantsOption,
+    [kToxinSkulkItemId] = gCustomizeSceneData.kProwlerVariantsOption,
+    [kAuricSkulkItemId] = gCustomizeSceneData.kProwlerVariantsOption,
+    [kTanithSkulkItemId] = gCustomizeSceneData.kProwlerVariantsOption,
+    [kWidowSkulkItemId] = gCustomizeSceneData.kProwlerVariantsOption,
+    [kSleuthSkulkItemId] = gCustomizeSceneData.kProwlerVariantsOption,
 
     [kShadowTunnelItemId] = gCustomizeSceneData.kTunnelsVariantOption,
     [kUnearthedTunnelItemId] = gCustomizeSceneData.kTunnelsVariantOption,
@@ -1341,6 +1358,46 @@ gCustomizeSceneData.kSceneObjects =
             roll = false
         }
     },
+    {
+        name = "Prowler",
+        defaultPos = { origin = Vector( -7.25, -10.38, 11.85 ), angles = Vector(0, 140, 0) },
+        poseParams =
+        {
+            { name = "body_pitch", value = 11.45 },
+            { name = "body_yaw", value = 0 },
+            { name = "stoop", value = 0.5 },
+        },
+        inputParams =
+        {
+            { name = "alive", value = true },
+            { name = "move", value = "idle" },
+            { name = "activity", value = "none" },
+        },
+        defaultTexIndex = 0,
+        modelFile = PrecacheAsset("models/prowler/onos/onos.model"),
+        graphFile = "cinematics/menu/customize_prowler.animation_graph",
+        team = kTeam2Index,
+        customizable = true,
+        usesHybridSkins = true,     --Denotes this cosmetic uses a mix of material swapping and model switching
+        cosmeticId = gCustomizeSceneData.kSceneObjectReferences.Prowler,
+        zoomedPoseParams =
+        {
+            { name = "body_pitch", value = 0 },
+            { name = "body_yaw", value = 0 },
+        },
+        zoomedInputParams =
+        {
+            { name = "alive", value = true },
+            { name = "move", value = "idle" },
+        },
+        zoomedRotationLocks =
+        {
+            pitch = {min = -28, max = 28},
+            yaw = { min = nil, max = nil },
+            roll = false
+        }
+    },
+
 
     --Gorge-n-Toys
     {
@@ -1849,7 +1906,7 @@ gCustomizeSceneData.kWorldButtonLabels = enum({
     "AlienLifeforms", "AlienTunnels", "AlienStructures",
 
     --Alien Lifeforms View
-    "Skulk", "Lerk", "Gorge", "Fade", "Onos",
+    "Skulk", "Lerk", "Gorge", "Fade", "Onos", "Prowler",
     "Babblers", "Hydra", "Clog", "BileMine",
 
     --Alien Tunnels View
@@ -2317,6 +2374,20 @@ gCustomizeSceneData.WorldButtonPositionSets =
         Vector( -7.38, -10.5, 10.75 ),
     },
 
+    [gCustomizeSceneData.kWorldButtonLabels.Prowler] =
+    {
+        Vector( -6, -10.38, 12.25 ),
+        Vector( -4.88, -9.13, 10.88 ),
+        Vector( -4.88, -8.5, 11 ),
+        Vector( -5.13, -7.75, 11 ),
+        Vector( -5.5, -7.63, 10.5 ),
+        Vector( -6.13, -7.5, 9.88 ),
+        Vector( -6.25, -7.88, 9.63 ),
+        Vector( -6.38, -8.38, 9.63 ),
+        Vector( -6.38, -9, 9.63 ),
+        Vector( -7.38, -10.5, 10.75 ),
+    },
+
     [gCustomizeSceneData.kWorldButtonLabels.Clog] = 
     {
         Vector( -6.38, -9, 9 ),
@@ -2619,6 +2690,26 @@ function FetchAllAvailableItems()
         end
     end
 
+
+    availableItems[gCustomizeSceneData.kProwlerVariantsOption] = {}
+    for i = 1, #kProwlerVariants do
+        local key = kProwlerVariants[i]
+        local itemId = nil
+        --hack, always force Bundle item. Note, ofc this will break if item def format changes (for Shadow)
+        if kProwlerVariantsData[kProwlerVariants[key]].itemIds then
+            if not GetHasVariant( kProwlerVariantsData, kProwlerVariantsData[kProwlerVariants[key]].itemIds[1], nil ) then
+                itemId = kProwlerVariantsData[kProwlerVariants[key]].itemIds[2]
+            end
+        else
+            itemId = kProwlerVariantsData[kProwlerVariants[key]].itemId
+        end
+
+        local ownsItem = itemId == nil or GetHasVariant( kProwlerVariantsData, i, nil )
+        if ownsItem or GetIsItemPurchasable( itemId ) or GetIsItemThunderdomeUnlock(itemId) then
+            table.insert(availableItems[gCustomizeSceneData.kProwlerVariantsOption], key)
+        end
+    end
+
     availableItems[gCustomizeSceneData.kAlienStructuresVariantOption] = {}
     for i = 1, #kAlienStructureVariants do
         local key = kAlienStructureVariants[i]
@@ -2913,6 +3004,9 @@ function GetCustomizableModelPath( label, marineType, options )
     elseif modelType == "onos" then
         modelPath =  "models/alien/onos/onos" .. GetVariantModel(kOnosVariantsData, options.onosVariant)
 
+    elseif modelType == "prowler" then
+        modelPath =  "models/alien/prowler/prowler" .. GetVariantModel(kProwlerVariantsData, options.prowlerVariant)
+
     elseif modelType == "marine" then
         modelPath = "models/marine/" .. marineType .. "/" .. marineType .. GetVariantModel(kMarineVariantsData, options.marineVariant)
 
@@ -3033,6 +3127,7 @@ local function PrecacheCustomizeMaterials()
     PrecacheCosmeticMaterials( "Lerk", kLerkVariantsData )
     PrecacheCosmeticMaterials( "Fade", kFadeVariantsData )
     PrecacheCosmeticMaterials( "Onos", kOnosVariantsData )
+    PrecacheCosmeticMaterials( "Prowler", kProwlerVariantsData )
     PrecacheCosmeticMaterials( "Hive", kAlienStructureVariantsData )
     PrecacheCosmeticMaterials( "Egg", kEggVariantsData )
     PrecacheCosmeticMaterials( "Embryo", kEggVariantsData )
@@ -3087,6 +3182,14 @@ local function PrecacheCustomizeAssets()
 
     for i = 1, #kOnosVariants do
         local model = GetCustomizableModelPath( "onos", "male", { onosVariant = i } )
+        if model and not table.icontains(cachedList, model) then
+            PrecacheAsset( model )
+            table.insert(cachedList, model)
+        end
+    end
+
+    for i = 1, #kProwlerVariants do
+        local model = GetCustomizableModelPath( "prowler", "male", { prowlerVariant = i } )
         if model and not table.icontains(cachedList, model) then
             PrecacheAsset( model )
             table.insert(cachedList, model)

@@ -30,6 +30,7 @@ local function InitCustomizationOptions(customizeElements)
     customizeElements.LerkVariantName:SetValue(GetVariantName(kLerkVariantsData, options.lerkVariant))
     customizeElements.FadeVariantName:SetValue(GetVariantName(kFadeVariantsData, options.fadeVariant))
     customizeElements.OnosVariantName:SetValue(GetVariantName(kOnosVariantsData, options.onosVariant))
+    customizeElements.ProwlerVariantName:SetValue(GetVariantName(kProwlerVariantsData, options.prowlerVariant))
     customizeElements.ExoVariantName:SetValue(GetVariantName(kExoVariantsData, options.exoVariant))
     customizeElements.RifleVariantName:SetValue(GetVariantName(kRifleVariantsData, options.rifleVariant))
     customizeElements.PistolVariantName:SetValue(GetVariantName(kPistolVariantsData, options.pistolVariant))
@@ -115,6 +116,8 @@ GUIMainMenu.CreateCustomizeForm = function(mainMenu, content, options, customize
                         modelType = "fade"
                     elseif input:GetFormElementName() == "OnosVariantName" then
                         modelType = "onos"
+                    elseif input:GetFormElementName() == "ProwlerVariantName" then
+                        modelType = "prowler"
                     elseif input:GetFormElementName() == "ExoVariantName" then
                         modelType = "exo"
                     elseif input:GetFormElementName() == "RifleVariantName" then
@@ -325,6 +328,15 @@ local function OnOnosChanged(formElement)
     Client.SetOptionString("lastShownModel", "onos")
     MenuPoses_SetPose("idle", "onos", true)
     MenuPoses_Function():SetCoordsOffset("onos")
+    SendPlayerVariantUpdate()
+end
+
+local function OnProwlerChanged(formElement)
+    local prowlerVariantName = formElement:GetValue()
+    Client.SetOptionInteger("prowlerVariant", FindVariant(kProwlerVariantsData, prowlerVariantName))
+    Client.SetOptionString("lastShownModel", "prowler")
+    MenuPoses_SetPose("idle", "prowler", true)
+    MenuPoses_Function():SetCoordsOffset("prowler")
     SendPlayerVariantUpdate()
 end
 
@@ -819,6 +831,7 @@ function GUIMainMenu:CreateCustomizeWindow()
     local lerkVariantNames = BuildVariantsTable( kLerkVariants, kLerkVariantsData )
     local fadeVariantNames = BuildVariantsTable( kFadeVariants, kFadeVariantsData )
     local onosVariantNames = BuildVariantsTable( kOnosVariants, kOnosVariantsData )
+    local prowlerVariantNames = BuildVariantsTable( kProwlerVariants, kProwlerVariantsData )
     local exoVariantNames = BuildVariantsTable( kExoVariants, kExoVariantsData )
     local rifleVariantNames = BuildVariantsTable( kRifleVariants, kRifleVariantsData )
     local pistolVariantNames = BuildVariantsTable( kPistolVariants, kPistolVariantsData )
@@ -986,6 +999,14 @@ function GUIMainMenu:CreateCustomizeWindow()
                 side     = "right",
                 values  = onosVariantNames,
                 callback = OnOnosChanged
+            },
+            {
+                name    = "ProwlerVariantName",
+                label   = "Prowler Type", --Resolve("CUSTOMIZE_MENU_PROWLER_TYPE"),
+                type    = "select",
+                side     = "right",
+                values  = prowlerVariantNames,
+                callback = OnProwlerChanged
             },
             {
                 name    = "AlienStructureVariantName",
