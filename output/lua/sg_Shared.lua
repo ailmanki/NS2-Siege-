@@ -29,3 +29,4 @@ kSideDoorType = 2
 kDoorTypeToSiegeMessage = {}
 kDoorTypeToSiegeMessage[kFrontDoorType] = kSiegeMessageTypes.FrontDoorOpened
 kDoorTypeToSiegeMessage[kSiegeDoorType] = kSiegeMessageTypes.SiegeDoorOpened
+kDoorTypeToSiegeMessage[kSideDoorType] = kSiegeMessageTypes.SideDoorOpened

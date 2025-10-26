@@ -6,6 +6,7 @@
 kSiegeMessageTypes = enum({
     'FrontDoorOpened',
     'SiegeDoorOpened',
+    'SideDoorOpened',
     'SuddenDeathActivated'
 })
 
@@ -32,6 +33,7 @@ if Client then
     local kSiegeMessages = {
         [kSiegeMessageTypes.FrontDoorOpened] = "Front Door now open!",
         [kSiegeMessageTypes.SiegeDoorOpened] = "Siege Door now open!",
+        [kSiegeMessageTypes.SideDoorOpened] = "Side Door now open!",
         [kSiegeMessageTypes.SuddenDeathActivated] = "Sudden Death mode activated!"
     }
 
