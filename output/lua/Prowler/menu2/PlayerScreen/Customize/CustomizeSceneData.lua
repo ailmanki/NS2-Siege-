@@ -1360,22 +1360,21 @@ gCustomizeSceneData.kSceneObjects =
     },
     {
         name = "Prowler",
-        defaultPos = { origin = Vector( -7.25, -10.38, 11.85 ), angles = Vector(0, 140, 0) },
+        defaultPos = { origin = Vector( -8.21, -8.06, 6.6 ), angles = Vector(09.78, 60, 0) },
         poseParams =
         {
-            { name = "body_pitch", value = 11.45 },
-            { name = "body_yaw", value = 0 },
-            { name = "stoop", value = 0.5 },
+            { name = "body_pitch", value = 0.0 },
+            { name = "body_yaw", value = 0.0 },
+            { name = "intensity", value = 0.0 },
         },
         inputParams =
         {
             { name = "alive", value = true },
             { name = "move", value = "idle" },
-            { name = "activity", value = "none" },
         },
         defaultTexIndex = 0,
-        modelFile = PrecacheAsset("models/prowler/onos/onos.model"),
-        graphFile = "cinematics/menu/customize_prowler.animation_graph",
+        modelFile = PrecacheAsset("models/aliens/prowler/prowler.model"),
+        graphFile = "cinematics/menu/customize_skulk.animation_graph", -- yes reuse skulk graph
         team = kTeam2Index,
         customizable = true,
         usesHybridSkins = true,     --Denotes this cosmetic uses a mix of material swapping and model switching
@@ -2376,21 +2375,18 @@ gCustomizeSceneData.WorldButtonPositionSets =
 
     [gCustomizeSceneData.kWorldButtonLabels.Prowler] =
     {
-        Vector( -6, -10.38, 12.25 ),
-        Vector( -4.88, -9.13, 10.88 ),
-        Vector( -4.88, -8.5, 11 ),
-        Vector( -5.13, -7.75, 11 ),
-        Vector( -5.5, -7.63, 10.5 ),
-        Vector( -6.13, -7.5, 9.88 ),
-        Vector( -6.25, -7.88, 9.63 ),
-        Vector( -6.38, -8.38, 9.63 ),
-        Vector( -6.38, -9, 9.63 ),
-        Vector( -7.38, -10.5, 10.75 ),
+        Vector( -6.58, -8.31, 7.63 ),
+        Vector( -6.46, -8.19, 7.1 ),
+        Vector( -6.58, -7.56, 6.65 ),
+        Vector( -6.46, -7.36, 6.48 ),
+        Vector( -5.71, -7.56, 6.1 ),
+        Vector( -6.58, -7.94, 5.98 ),
+        Vector( -6.58, -8.19, 5.98 ),
     },
 
     [gCustomizeSceneData.kWorldButtonLabels.Clog] = 
     {
-        Vector( -6.38, -9, 9 ),
+        Vector( -8.38, -9, 9 ),
         Vector( -6.38, -8.63, 9.25 ),
         Vector( -6.5, -8.13, 9.13 ),
         Vector( -8.27, -8.05, 9.59 ),
@@ -2694,18 +2690,9 @@ function FetchAllAvailableItems()
     availableItems[gCustomizeSceneData.kProwlerVariantsOption] = {}
     for i = 1, #kProwlerVariants do
         local key = kProwlerVariants[i]
-        local itemId = nil
-        --hack, always force Bundle item. Note, ofc this will break if item def format changes (for Shadow)
-        if kProwlerVariantsData[kProwlerVariants[key]].itemIds then
-            if not GetHasVariant( kProwlerVariantsData, kProwlerVariantsData[kProwlerVariants[key]].itemIds[1], nil ) then
-                itemId = kProwlerVariantsData[kProwlerVariants[key]].itemIds[2]
-            end
-        else
-            itemId = kProwlerVariantsData[kProwlerVariants[key]].itemId
-        end
-
+        local itemId = kProwlerVariantsData[kProwlerVariants[key]].itemId
         local ownsItem = itemId == nil or GetHasVariant( kProwlerVariantsData, i, nil )
-        if ownsItem or GetIsItemPurchasable( itemId ) or GetIsItemThunderdomeUnlock(itemId) then
+        if ownsItem or GetIsItemPurchasable(itemId) or GetIsItemThunderdomeUnlock(itemId) then
             table.insert(availableItems[gCustomizeSceneData.kProwlerVariantsOption], key)
         end
     end
@@ -3005,7 +2992,7 @@ function GetCustomizableModelPath( label, marineType, options )
         modelPath =  "models/alien/onos/onos" .. GetVariantModel(kOnosVariantsData, options.onosVariant)
 
     elseif modelType == "prowler" then
-        modelPath =  "models/alien/prowler/prowler" .. GetVariantModel(kProwlerVariantsData, options.prowlerVariant)
+        modelPath =  "models/alien/prowler/prowler.model"
 
     elseif modelType == "marine" then
         modelPath = "models/marine/" .. marineType .. "/" .. marineType .. GetVariantModel(kMarineVariantsData, options.marineVariant)

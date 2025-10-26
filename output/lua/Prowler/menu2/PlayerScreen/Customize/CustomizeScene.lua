@@ -674,7 +674,7 @@ function CustomizeScene:UpdateMarineExosViewAnimations(time, deltaTime)
 end
 --]]
 
-local kLifeformSceneIndicies = {-1, -1, -1, -1, -1}
+local kLifeformSceneIndicies = {-1, -1, -1, -1, -1, -1}
 local kActiveLifeformTauntIdx = 0
 local lifeformTauntStopTime = -1
 local lastLifeformIndex = -1    --cache prev, so no back-2-back repeats

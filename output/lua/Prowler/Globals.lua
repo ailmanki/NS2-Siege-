@@ -45,7 +45,7 @@ kProwlerVariantsData =
         displayName = "Kodiak", 
         modelFilePart = "", 
         viewModelFilePart = "",
-        worldMaterial = "models/prow_kodiak.material",
+        worldMaterial = "models/alien/skulk/skulk_kodiak.material",
         worldMaterialIndex = 0,
         viewMaterials = 
         {
@@ -58,7 +58,7 @@ kProwlerVariantsData =
         displayName = "Reaper", 
         modelFilePart = "", 
         viewModelFilePart = "",
-        worldMaterial = "models/prow_albino.material",
+        worldMaterial = "models/alien/skulk/skulk_albino.material",
         worldMaterialIndex = 0,
         viewMaterials = 
         {
@@ -71,7 +71,7 @@ kProwlerVariantsData =
         displayName = "Abyss",  
         modelFilePart = "",  
         viewModelFilePart = "",
-        worldMaterial = "models/prow_abyss.material",
+        worldMaterial = "models/alien/skulk/skulk_abyss.material",
         worldMaterialIndex = 0,
         viewMaterials = 
         {
@@ -84,7 +84,7 @@ kProwlerVariantsData =
         displayName = "Nocturne",  
         modelFilePart = "", 
         viewModelFilePart = "",
-        worldMaterial = "models/prow_nocturne.material",
+        worldMaterial = "models/alien/skulk/skulk_nocturne.material",
         worldMaterialIndex = 0,
         viewMaterials = 
         {
@@ -97,7 +97,7 @@ kProwlerVariantsData =
         displayName = "Toxin", 
         modelFilePart = "",
         viewModelFilePart = "",
-        worldMaterial = "models/prow_toxin.material",
+        worldMaterial = "models/alien/skulk/skulk_toxin.material",
         worldMaterialIndex = 0,
         viewMaterials = 
         {
@@ -110,7 +110,7 @@ kProwlerVariantsData =
         displayName = "Auric", 
         modelFilePart = "",
         viewModelFilePart = "",
-        worldMaterial = "models/prow_auric.material",
+        worldMaterial = "models/alien/skulk/skulk_auric.material",
         worldMaterialIndex = 0,
         viewMaterials = 
         {
@@ -123,7 +123,7 @@ kProwlerVariantsData =
         displayName = "Widow", 
         modelFilePart = "",
         viewModelFilePart = "",
-        worldMaterial = "models/prow_widow.material",
+        worldMaterial = "models/alien/skulk/skulk_widow.material",
         worldMaterialIndex = 0,
         viewMaterials = 
         {
@@ -136,7 +136,7 @@ kProwlerVariantsData =
         displayName = "Sleuth", 
         modelFilePart = "",
         viewModelFilePart = "",
-        worldMaterial = "models/prow_sleuth.material",
+        worldMaterial = "models/alien/skulk/skulk_sleuth.material",
         worldMaterialIndex = 0,
         viewMaterials = 
         {
@@ -149,7 +149,7 @@ kProwlerVariantsData =
         displayName = "Tanith", 
         modelFilePart = "",
         viewModelFilePart = "",
-        worldMaterial = "models/prow_tanith.material",
+        worldMaterial = "models/alien/skulk/skulk_tanith.material",
         worldMaterialIndex = 0,
         viewMaterials = 
         {
@@ -161,6 +161,85 @@ kDefaultProwlerVariant = kProwlerVariants.normal
 
 if Client then
 
+--Util to determine if the specific variant for a customizable object requires
+--material swapping or if it uses a model (thus, baked materials)
+function GetIsVariantMaterialSwapped( label, marineType, options )
+    assert(label and type(label) == "string" and label ~= "")
+    assert(options)
+
+    local objType = string.lower(label)
+
+    if objType == "tunnel" then
+        return (
+            options.alienTunnelsVariant ~= kAlienTunnelVariants.Default and
+            options.alienTunnelsVariant ~= kAlienTunnelVariants.Shadow
+        )
+    end
+
+    if objType == "skulk" then
+        return (
+            options.skulkVariant ~= kDefaultSkulkVariant and
+            options.skulkVariant ~= kSkulkVariants.shadow
+        )
+    end
+
+    if objType == "gorge" then
+        return (
+            options.gorgeVariant ~= kDefaultGorgeVariant and
+            options.gorgeVariant ~= kGorgeVariants.shadow
+        )
+    end
+
+    if objType == "lerk" then
+        return (
+            options.lerkVariant ~= kDefaultLerkVariant and
+            options.lerkVariant ~= kLerkVariants.shadow
+        )
+    end
+
+    if objType == "fade" then
+        return (
+            options.fadeVariant ~= kDefaultFadeVariant and
+            options.fadeVariant ~= kFadeVariants.shadow
+        )
+    end
+
+    if objType == "onos" then
+        return (
+            options.onosVariant ~= kDefaultOnosVariant and
+            options.onosVariant ~= kOnosVariants.shadow
+        )
+    end
+
+    if objType == "prowler" then
+        return (
+            options.prowlerVariant ~= kDefaultOnosVariant
+        )
+    end
+
+    if objType == "babbler" then
+        return (
+            options.babblerVariant ~= kDefaultBabblerVariant and
+            options.babblerVariant ~= kBabblerVariants.Shadow
+        )
+    end
+
+    if objType == "babbler_egg" then
+        return (
+            options.babblerEggVariant ~= kDefaultBabblerEggVariant and
+            options.babblerEggVariant ~= kBabblerEggVariants.Shadow
+        )
+    end
+
+    if objType == "hydra" then
+        return (
+            options.hydraVariant ~= kDefaultHydraVariant and
+            options.hydraVariant ~= kHydraVariants.Shadow
+        )
+    end
+
+    return false
+end
 --General Utility to fetch the materials and their associated model-indices for overridding
 --Note: when a given model has multiple indices per skin, matIdx return value is always false
 --and the matPath variable is a table with keys (zero indexed) as material indices
@@ -254,7 +333,7 @@ function GetCustomizableWorldMaterialData( label, marineType, options )
 
     elseif matType == "prowler" and options.prowlerVariant ~= kDefaultProwlerVariant then
         matPath = GetPrecachedCosmeticMaterial( "Prowler", options.prowlerVariant )
-        matIdx = GetVariantWorldMaterialIndex( kProwlerVariantsData, options.prowlerVariant )
+        matIdx = 0 -- GetVariantWorldMaterialIndex( kProwlerVariantsData, options.prowlerVariant )
 
     elseif matType == "hive" and options.alienStructuresVariant ~= kDefaultAlienStructureVariant then
         matPath = GetPrecachedCosmeticMaterial( "Hive", options.alienStructuresVariant )

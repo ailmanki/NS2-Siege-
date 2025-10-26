@@ -165,10 +165,17 @@ if Client then
             local worldModel = self:GetRenderModel()
             if worldModel and worldModel:GetReadyForOverrideMaterials() then
 
-                if self.prowlerVariant ~= kDefaultProwlerVariant and self.prowlerVariant ~= kProwlerVariants.shadow then
+                if self.prowlerVariant ~= kDefaultProwlerVariant then
 
                     local worldMat = GetPrecachedCosmeticMaterial( className, self.prowlerVariant )
-                    worldModel:SetOverrideMaterial( kMaterialIndex, worldMat )
+                    if type(worldMat) == "table" then
+                        -- Support multi-index material overrides (keys may be zero-based)
+                        for idx, mat in pairs(worldMat) do
+                            worldModel:SetOverrideMaterial( idx, mat )
+                        end
+                    else
+                        worldModel:SetOverrideMaterial( kMaterialIndex, worldMat )
+                    end
 
                 else
                 --reset model materials to baked/compiled ones
@@ -189,12 +196,22 @@ if Client then
                     local viewModel = viewModelEnt:GetRenderModel()
                     if viewModel and viewModel:GetReadyForOverrideMaterials() then
 
+                        -- For Prowler: don't override view materials for default or shadow (uses baked textures)
                         if self.prowlerVariant ~= kDefaultProwlerVariant and self.prowlerVariant ~= kProwlerVariants.shadow then
                             local viewMat = GetPrecachedCosmeticMaterial( className, self.prowlerVariant, true )
-                            viewModel:SetOverrideMaterial( kViewMaterialHornIndex, viewMat[1] )
-                            viewModel:SetOverrideMaterial( kViewMaterialBodyIndex, viewMat[2] )
+                            if type(viewMat) == "table" then
+                                -- Handle both 0/1-based keyed tables
+                                local matHorn = viewMat[0] or viewMat[1]
+                                local matBody = viewMat[1] or viewMat[2] or matHorn
+                                if matHorn then viewModel:SetOverrideMaterial( kViewMaterialHornIndex, matHorn ) end
+                                if matBody then viewModel:SetOverrideMaterial( kViewMaterialBodyIndex, matBody ) end
+                            else
+                                -- Single material: apply to both horn & body
+                                viewModel:SetOverrideMaterial( kViewMaterialHornIndex, viewMat )
+                                viewModel:SetOverrideMaterial( kViewMaterialBodyIndex, viewMat )
+                            end
                         else
-                        --Default and Shadow model use bot default view model and default textures
+                        -- Default and Shadow model use both default view model and default textures
                             viewModel:ClearOverrideMaterials()
                         end
 
