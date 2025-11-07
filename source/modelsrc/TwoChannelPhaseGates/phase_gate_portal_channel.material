@@ -1,3 +1,4 @@
 shader = "shaders/Emissive.surface_shader"
 emissiveMap = "models/TwoChannelPhaseGates/phase_gate_portal_channel.dds"
+emissiveIntensity = 3.0
 surface = "electric"
