@@ -50,7 +50,7 @@ ModLoader.SetupFileHook( "lua/ConcedeSequence.lua", "lua/sg_ConcedeSequence.lua"
 --alien health value adjustments
 ModLoader.SetupFileHook( "lua/BalanceHealth.lua", "lua/sg_BalanceHealth.lua" , "post" )
 --remove the function siege's bot's tunnel action
-ModLoader.SetupFileHook( "lua/bots/CommonAlienActions.lua", "lua/sg_CommonAlienActions.lua" , "post" )
+--ModLoader.SetupFileHook( "lua/bots/CommonAlienActions.lua", "lua/sg_CommonAlienActions.lua" , "post" )
 ModLoader.SetupFileHook( "lua/Drifter.lua", "lua/sg_Drifter.lua" , "post" )
 
 --unlock the Armory's tech branch
@@ -96,3 +96,5 @@ ModLoader.SetupFileHook("lua/ExoFlashlight_Client.lua", "lua/sg_ExoFlashlight_Cl
 
 -- override console unstuck command without replacing the file
 ModLoader.SetupFileHook( "lua/ConsoleCommands_Server.lua", "lua/sg_ConsoleCommands_Server.lua" , "replace" )
+
+ModLoader.SetupFileHook( "lua/ARC.lua", "lua/sg_ARC.lua" , "post" )

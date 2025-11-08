@@ -2,3 +2,6 @@ temp/
 /.idea/
 /notes/
 /definition/
+/original_code/
+/output/models/TwoChannelPhaseGates/phase_gate_portal_channel.dds
+/output/models/TwoChannelPhaseGates/phase_gate_portal_channel.material
