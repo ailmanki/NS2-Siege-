@@ -4,3 +4,5 @@ albedoMap = "materials/siegeplus/siege.dds"
 normalMap = "materials/dev/dev_normal.dds"
 opacityMap = "materials/siegeplus/siege_alpha.dds"
 specularMap = "materials/dev/black.dds"
+blendMode = "alpha_blend"
+alphaTest = 0.5

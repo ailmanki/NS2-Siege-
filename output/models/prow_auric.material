@@ -3,4 +3,7 @@ albedoMap = "models/alien/skulk/skulk_auric.dds"
 normalMap = "models/alien/skulk/skulk_v2_normal.dds"
 emissiveMap = "models/alien/skulk/skulk_illum_auric.dds"
 specularMap = "models/alien/skulk/skulk_spec_auric.dds"
+emissiveIntensity = 1.5
+gloss = 0.6
+reflectivity = 0.3
 surface = "organic"
